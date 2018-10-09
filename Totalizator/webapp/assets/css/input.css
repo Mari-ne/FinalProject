@@ -1,0 +1,15 @@
+input{
+  margin: 5px 20px;
+  background: #BE51CD;
+  color: #fff;
+  border: solid #FFE662 0.5px;
+  outline: none;
+}
+
+::placeholder {
+  color: #fff;
+}
+
+input:focus{
+  border: dotted;
+}

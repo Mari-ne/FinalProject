@@ -1,0 +1,25 @@
+button{
+  color: #fff;
+  background: #5F5000;
+  text-align: center;
+  cursor: pointer;
+  border: solid 0.5px #FFDF37;
+  width: 25%;
+  margin: 10px 5px;
+  display: inline;
+}
+
+button{
+  width: auto;
+}
+
+button:hover{
+  border: dotted #FFDF37;
+  background-color: #FFD600;
+  color: #000;
+}
+
+button:active{
+  background: #808080;
+  color: #66ff66;
+}

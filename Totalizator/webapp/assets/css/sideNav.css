@@ -1,0 +1,29 @@
+div.sidenav {
+    float: left;
+    height: 100%;
+    width: 20%;
+    position: fixed;
+    z-index: 10;
+    top: 10%;
+    left: 0;
+    background-color: #BE51CD;
+    overflow-x: hidden;   
+    margin-top: -25px; 
+}
+
+.sidenav a, .sidenav a:visited {
+    color: white;
+    padding: 16px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #FFD600;
+}
+
+i{
+	float: right;
+}
+
+a:hover i{
+	text-shadow: none;
+	color: #4EDE00;
+}

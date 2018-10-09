@@ -1,0 +1,29 @@
+.scroll > table{
+	width: 95%;
+}
+
+th, td{
+	border: 1px solid #1D5300;
+	font-size: 14px;
+	text-align: center;
+	color: #fff;
+}
+
+tr:hover td{
+	color: #73EC33;
+	text-shadow: 0 0 3px #00cc66, 0 0 3px #ffff00;
+}
+
+table.personal{
+	display: inline;
+}
+
+table.personal td{
+	border: none;
+	text-align: initial;
+	font-size: 18px;
+}
+
+table.personal tr:hover td{
+	text-shadow: none;
+}

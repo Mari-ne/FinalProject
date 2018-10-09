@@ -1,0 +1,7 @@
+a, a:visited{
+  color: #fff;
+}
+
+a:hover{  
+  text-shadow: 2px 2px 2px #73EC33;
+}
