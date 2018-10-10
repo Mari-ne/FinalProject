@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.epam.totalizator.entity.Competition;
 import com.epam.totalizator.service.CompetitionService;
+import com.epam.totalizator.service.ResultService;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.util.ProjectException;
 
