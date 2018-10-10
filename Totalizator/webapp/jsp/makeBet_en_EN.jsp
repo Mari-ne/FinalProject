@@ -19,7 +19,7 @@
 	<div id = "upperline">
 		<c:import url="..\WEB-INF\jspf\upper_en_EN.jsp" />
 		<form action = "Controller" method = "get">
-		  	<input type = "hidden" name = 'page' value = "path.addTeam"></input>
+		  	<input type = "hidden" name = 'page' value = "path.makeBet"></input>
 		  	<c:import url="..\WEB-INF\jspf\header.jsp" />
 		</form>
   	</div>
@@ -37,7 +37,7 @@
 					<tr>
 						<td><c:out value="${elem.id}"/></td>
 						<td>
-							<input type="hidden" name="id" value="${elem.sport}">
+							<input type="hidden" name="id" value="${elem.id}">
 							<c:out value="${elem.sport}"/></td>
 						<td>
 							<select name = "forecast">
