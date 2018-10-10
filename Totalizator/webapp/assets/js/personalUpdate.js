@@ -39,7 +39,8 @@ function input(element){
 	    i.addEventListener('click', i, true);
 		element.parentNode.appendChild(i);
 		
-		document.getElementsByTagName("form")[0].getElementsByTagName("input")[document.getElementsByTagName("input").length - 1].focus();
+		var inputs = document.getElementsByClassName("content")[0].getElementsByTagName("form")[0].getElementsByTagName("input");
+		inputs[inputs.length - 1].focus();
 	}
 	else{
 		while(inp.search(/\d{4}/) === 0){
@@ -55,7 +56,7 @@ function input(element){
 function change(elem){
 	var inp = elem.value;
 	if(inp.length === 0){
-		var inputs = document.getElementsByTagName("form")[0].getElementsByTagName("input");
+		var inputs = document.getElementsByClassName("content")[0].getElementsByTagName("form")[0].getElementsByTagName("input");
 	    for(i = 0; i < inputs.length; i ++){
 	    	if(inputs[i] == elem && (i + 1) !== inputs.length){
 	    		elem.parentNode.parentNode.parentNode.removeChild(elem.parentNode.parentNode);
