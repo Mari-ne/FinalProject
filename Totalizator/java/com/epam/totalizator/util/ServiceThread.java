@@ -18,14 +18,22 @@ import com.epam.totalizator.dao.CompetitionDao;
 import com.epam.totalizator.dao.ForecastDao;
 import com.epam.totalizator.dao.PersonalResultDao;
 import com.epam.totalizator.dao.ResultDao;
+import com.epam.totalizator.dao.UserDao;
 import com.epam.totalizator.entity.Competition;
 import com.epam.totalizator.entity.Forecast;
 import com.epam.totalizator.entity.PersonalResult;
 import com.epam.totalizator.entity.Result;
+import com.epam.totalizator.entity.User;
 
 
 public class ServiceThread extends Thread {
 
+	private PersonalResultDao personDao = new PersonalResultDao();
+	private ResultDao resultDao = new ResultDao();
+	private UserDao userDao = new UserDao();
+	private CompetitionDao dao = new CompetitionDao();
+	private ForecastDao forecastDao = new ForecastDao();
+	
 	public static final AtomicInteger number = new AtomicInteger(15);
 	private static final Logger LOGGER = Logger.getRootLogger();
 	
@@ -33,21 +41,22 @@ public class ServiceThread extends Thread {
 	
 	@Override
 	public void run() {
-		CompetitionDao compDao = new CompetitionDao();
+		LOGGER.debug("start work!");
         while(true) {
         	try {
         		int i = 0;
-				List<Competition> list = compDao.findBettable();
+				List<Competition> list = dao.findBettable();
 				Timestamp now = new Timestamp(System.currentTimeMillis());
 				//should check only first one because other will be later
 				if(!list.isEmpty() && list.get(0).getStart().before(now)) {
 					for(i = 0; i < list.size(); i ++){
 						list.get(i).setState("Completion of bets");
-						compDao.update(list.get(i));
+						dao.update(list.get(i));
 						count.incrementAndGet();
 					}
-					if(count.equals(number)) {
+					if(count.get() == number.get()) {
 						waiting();
+						count.set(0);
 					}
 				} else {
 					TimeUnit.SECONDS.sleep(10);
@@ -62,22 +71,22 @@ public class ServiceThread extends Thread {
     }
 	
 	private void waiting() {
-		CompetitionDao dao = new CompetitionDao();
-		ForecastDao forecastDao = new ForecastDao();
 		try {
 			List<Forecast> forecasts = forecastDao.findActualForecast();
 			HashMap<String, Integer> correct = new HashMap<>();
 			forecasts.forEach((f)->correct.put(f.getUserLogin(), 0));
-			int count = 0;
+			int c = 0;
 			List<Competition> completed = new ArrayList<>();
-			while(count < number.get()) {
+			while(c < number.get()) {
 				try {
 					List<Competition> list = dao.findExpected();
 					if(!list.isEmpty()) {
-						count ++;
+						LOGGER.info("first: " + list.size() + "\n");
 						for(int i = 0; i < list.size(); i ++) {
+							c ++;
 							list.get(i).setState("Completed");
 							list.get(i).setResult(makeResult(list.get(i).getSportId()));
+							LOGGER.debug("id: " + list.get(i).getId() + " - result: " + list.get(i).getResult());
 							completed.add(list.get(i));
 							dao.update(list.get(i));
 						}
@@ -89,41 +98,56 @@ public class ServiceThread extends Thread {
 					LOGGER.error(e.getMessage());
 					Thread.currentThread().interrupt();
 				}
-			}
-			PersonalResultDao personDao = new PersonalResultDao();
-			ResultDao resultDao = new ResultDao();
+			}			
+			LOGGER.debug("start result processing");
+			resultProcessing(completed, forecasts, correct);
+		} catch (ProjectException e) {
+			LOGGER.error(e.getMessage());
+		}
+		
+	}
+	
+	private void resultProcessing(List<Competition> completed, List<Forecast> forecasts, HashMap<String, Integer> correct) {
+		try {
 			List<PersonalResult> perResult = personDao.findAll();
 			List<Result> results = resultDao.findAll();
 			//find amount of correct forecast for each of user
 			countCorrect(completed, forecasts, correct);
 			//find quantity of betters and amount of bets for each quantity of correct forecast
+			LOGGER.info(Math.ceil(number.get() / 2) + "\n");
 			for(Map.Entry<String, Integer> elem : correct.entrySet()) {
-				if(elem.getValue().intValue() >= Math.ceil(number.get() / 2)) {
+				LOGGER.info(elem.getKey() + ": " + elem.getValue() + "\n");
+				if(elem.getValue().intValue() > Math.ceil(number.get() / 2)) {
+					LOGGER.debug("Have enough: " + elem.getKey() + " - correct " + elem.getValue());
 					//better can get gain only if he has more then half of correct forecasts
 					BigDecimal bet = perResult.get(Finder.findPersonalResult(elem.getKey(), perResult)).getLastBet();	
+					LOGGER.debug("bet: " + bet);
 					int index = Finder.findResult(elem.getValue().intValue(), results);
 					results.get(index).addBet(bet);
 					results.get(index).addBetter();
 				}else {
 					Predicate<PersonalResult> filter = p -> p.getUserLogin().equals(elem.getKey());
 					perResult.removeIf(filter);
+					sendResults(false, null, userDao.findById(elem.getKey()).get());
 				}
 			}
 			//find coefficient 
 			for(int i = 0; i < results.size(); i ++) {
 				Result r = results.get(i);
-				r.setCoefficient(BigDecimal.valueOf(r.getPool().doubleValue() / r.getBets().doubleValue()));
+				LOGGER.info(r.getPool().doubleValue() + "/" + r.getBets().doubleValue() + "=" + r.getPool().divide(r.getBets()).doubleValue() + "\n");
+				r.setCoefficient(r.getPool().divide(r.getBets()));
 			}
 			//find amount of gain for each user, who gain something
 			for(int i = 0; i < perResult.size(); i ++) {
 				BigDecimal coef = results.get(Finder.findResult(correct.get(perResult.get(i).getUserLogin()), results)).getCoefficient();
 				BigDecimal lastBet = perResult.get(i).getLastBet();				
 				perResult.get(i).setLastGain(lastBet.multiply(coef).setScale(2, RoundingMode.FLOOR));
+				personDao.update(perResult.get(i));
+				sendResults(true, perResult.get(i).getLastGain(), userDao.findById(perResult.get(i).getUserLogin()).get());
 			}
 		} catch (ProjectException e) {
 			LOGGER.error(e.getMessage());
 		}
-		
 	}
 	
 	private String makeResult(int sportId) {
@@ -163,5 +187,21 @@ public class ServiceThread extends Thread {
 				}
 			}
 		}
+	}
+	
+	private void sendResults(boolean isWinMessage, BigDecimal gain, User user) {
+		Mailer mailer = new Mailer();
+		String subject = "";
+		String text = "";
+		if(isWinMessage) {
+			subject = "Totalizator congratulate you";
+			text = "Congradulation, " + user.getLogin() + "!\nYou won ";
+			text += gain.setScale(2, RoundingMode.HALF_UP).toString();
+			text += " with your last bet!";
+		} else {
+			subject = "Bad information from Totalizator";
+			text = "Sorry, " + user.getLogin() + ", but you got nothing from your last bet. Good luck next time!";
+		}
+		mailer.send(subject, text, user.getEmail());
 	}
 }
