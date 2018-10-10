@@ -121,7 +121,7 @@
 					</tr>
 			</c:if>
 		</table>
-		<a href="${pageContext.request.contextPath}/jsp/personalUpdate_en_EN.jsp" >Редактировать учетную запись<i class="material-icons">mode_edit</i></a>
+		<a href="${pageContext.request.contextPath}/jsp/personalUpdate_ru_RU.jsp" >Редактировать учетную запись<i class="material-icons">mode_edit</i></a>
 		<c:if test="${sessionScope.user.role == 'User' && forecast.size() != 0}">
 			<table>
 				<caption>Ваши прогнозы</caption>
