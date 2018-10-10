@@ -16,9 +16,7 @@
 	  	<a href="${pageContext.request.contextPath}/jsp/statistic_ru_RU.jsp">Статистика матчей<i class="fa fa-line-chart"></i></a>
 		<a href="${pageContext.request.contextPath}/jsp/teams_ru_RU.jsp">Информация о командах<i class="fa fa-info-circle"></i></a>
 		<a href="#">Ставки игроков<i class="fa fa-users"></i></a>
-		<c:if test="${sessionScope.user.role != 'User'}">
-			<a href="${pageContext.request.contextPath}/jsp/pool_ru_RU.jsp">Призовой пул<i class="fa fa-money"></i></a>
-		</c:if>
+		<a href="${pageContext.request.contextPath}/jsp/pool_ru_RU.jsp">Призовой пул<i class="fa fa-money"></i></a>
 		<c:if test="${sessionScope.user.role == 'Administrator'}">
 			<a href="${pageContext.request.contextPath}/jsp/user_ru_RU.jsp">Управление пользователями<i class="fa fa-group"></i></a>
 		</c:if>

@@ -16,9 +16,7 @@
   	<a href="${pageContext.request.contextPath}/jsp/statistic_en_EN.jsp">Matches statistic<i class="fa fa-line-chart"></i></a>
 	<a href="${pageContext.request.contextPath}/jsp/teams_en_EN.jsp">Teams information<i class="fa fa-info-circle"></i></a>
 	<a href="#">Players bets<i class="fa fa-users"></i></a>
-	<c:if test="${sessionScope.user.role != 'User'}">
-		<a href="${pageContext.request.contextPath}/jsp/pool_en_EN.jsp">Prize pool<i class="fa fa-money"></i></a>
-	</c:if>
+	<a href="${pageContext.request.contextPath}/jsp/pool_en_EN.jsp">Prize pool<i class="fa fa-money"></i></a>
 	<c:if test="${sessionScope.user.role == 'Administrator'}">
 		<a href="${pageContext.request.contextPath}/jsp/user_en_EN.jsp">Managment of users<i class="fa fa-group"></i></a>
 	</c:if>

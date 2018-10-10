@@ -16,9 +16,7 @@
   	<a href="${pageContext.request.contextPath}/jsp/statistic_jp_JP.jsp">試合の統計<i class="fa fa-line-chart"></i></a>
 	<a href="${pageContext.request.contextPath}/jsp/teams_jp_JP.jsp">チームの情報<i class="fa fa-info-circle"></i></a>
 	<a href="#">プレーヤーの賭け<i class="fa fa-users"></i></a>
-	<c:if test="${sessionScope.user.role != 'User'}">
-		<a href="${pageContext.request.contextPath}/jsp/pool_jp_JP.jsp">賞金プール<i class="fa fa-money"></i></a>
-	</c:if>
+	<a href="${pageContext.request.contextPath}/jsp/pool_jp_JP.jsp">賞金プール<i class="fa fa-money"></i></a>
 	<c:if test="${sessionScope.user.role == 'Administrator'}">
 		<a href="${pageContext.request.contextPath}/jsp/user_jp_JP.jsp">ユーザーの管理<i class="fa fa-group"></i></a>
 	</c:if>	
