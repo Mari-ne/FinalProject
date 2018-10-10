@@ -50,11 +50,11 @@ public class CompetitionDao extends AbstractDao<Integer, Competition> {
 	private static final String SQL_INSERT_COMPETITION = "insert into competition(sport_id, team1_id, team2_id, start, finish)\r\n"
 			+ "values(?, ?, ?, ?, ?)";
 	
-	private static final String SQL_SELECT_BETTABLE_WITH_NAMES = "select c.id, c.team1_id, c.team2_id, l1.name as team1, l2.name as team2, l3.name as sport\r\n"
+	private static final String SQL_SELECT_BETTABLE_WITH_NAMES = "select c.id, c.team1_id, c.team2_id, l1.name as team1, l2.name as team2, l3.sport\r\n"
 			+ "from competition as c inner join language_has_sport_team as l1 on c.team1_id = l1.sport_team_id\r\n"
 			+ " 					inner join language_has_sport_team as l2 on c.team2_id = l2.sport_team_id\r\n"
 			+ " 					inner join language_m2m_sport as l3 on l3.sport_id = c.sport_id\r\n"	
-			+ "where l1.language_id = ? and l2.language_id = ? and c.state = 'Acceptence of bets'";
+			+ "where l1.language_id = ? and l2.language_id = ? and l3.language_id = ? and c.state = 'Acceptence of bets'";
 	
 	private static final String SQL_SELECT_BETTABLE = "select id, team1_id, team2_id, start, finish\r\n"
 			+ "from competition\r\n"	
@@ -67,7 +67,7 @@ public class CompetitionDao extends AbstractDao<Integer, Competition> {
 	
 	private static final String SQL_SELECT_EXPECTED = "select id, team1_id, sport_id, team2_id, start, finish\r\n"
 			+ "from competition\r\n"	
-			+ "where state = 'Completion of bets' and datediff(start, current_date()) <= 0";
+			+ "where state = 'Completion of bets' and timestampdiff(second, current_timestamp(), finish) <= 0";
 	
 	private static final String SQL_REMOVE_COMPETITION = "update competition\r\n"
 			+ "set is_active = 0\r\n"
@@ -353,9 +353,9 @@ public class CompetitionDao extends AbstractDao<Integer, Competition> {
 					switch(comp.getState()) {
 						case "Acceptence of bets":{
 							if(lang.equals("RU")) {
-								comp.setState("Приниятие ставки");
+								comp.setState("Принятие ставок");
 							} else {
-								comp.setState("賭けを受け入れます ");
+								comp.setState("賭けを受け入れます");
 							}
 							break;
 						}
@@ -397,6 +397,7 @@ public class CompetitionDao extends AbstractDao<Integer, Competition> {
 			stat = con.prepareStatement(SQL_SELECT_BETTABLE_WITH_NAMES);
 			stat.setString(1, lang);
 			stat.setString(2, lang);
+			stat.setString(3, lang);
 			result = stat.executeQuery();
 			while(result.next()) {
 				Competition comp = new Competition();
@@ -532,5 +533,4 @@ public class CompetitionDao extends AbstractDao<Integer, Competition> {
 		}
 		return entity;
 	}
-
 }
