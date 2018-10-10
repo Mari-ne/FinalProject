@@ -32,9 +32,11 @@ public class ForecastDao extends AbstractDao<Key<String, Integer>, Forecast> {
 			+ "from competition_m2m_user as cu inner join competition as c on cu.competition_id = c.id\r\n"
 			+ "									inner join language_has_sport_team as l1 on c.team1_id = l1.sport_team_id\r\n"
 			+ "									inner join language_has_sport_team as l2 on c.team2_id = l2.sport_team_id\r\n"
-			+ "where l1.language_id = ? and l2.language_id = ? and cu.user_login = ?";
+			+ "where l1.language_id = ? and l2.language_id = ? and cu.user_login = ?"
+			+ "order by cu.competition_id desc\r\n"
+			+ "limit 15";
 	
-	private static final String SQL_INSER_FORECAST = "insert into competition_m2m_user (login, competition_id, result)\r\n"
+	private static final String SQL_INSER_FORECAST = "insert into competition_m2m_user (user_login, competition_id, result)\r\n"
 			+ "values (?, ?, ?)";
 	
 	private static final String SQL_SELECT_ACTUAl_FORECAST = "select user_login, competition_id, result\r\n" + 
