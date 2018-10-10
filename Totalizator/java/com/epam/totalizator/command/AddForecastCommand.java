@@ -30,5 +30,4 @@ public class AddForecastCommand extends AbstractCommand {
 		}
 		return Optional.ofNullable(page);
 	}
-
 }
