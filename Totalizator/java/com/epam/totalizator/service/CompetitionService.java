@@ -24,6 +24,7 @@ public class CompetitionService {
 		compet.setSportId(sport);
 		compet.setStart(start);
 		compet.setFinish(finish);
+		org.apache.log4j.Logger.getRootLogger().info(compDao.findBettable().size() + "\n");
 		if(compDao.findBettable().size() == ServiceThread.number.get()) {
 			ResultService.refreshResult();
 		}
