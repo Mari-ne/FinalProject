@@ -127,8 +127,10 @@ public class UserService {
 	
 	public static boolean makeBet(String login, String[] ids, String[] forecast, BigDecimal bet) throws ProjectException{
 		boolean result = true;
+		org.apache.log4j.Logger.getRootLogger().info(ids.length + "\n");
 		for(int i = 0; i < ids.length; i ++) {
 			int id = Integer.parseInt(ids[i]);
+			org.apache.log4j.Logger.getRootLogger().info(login + " " + bet + " " + ids[i] + " " + forecast[i] + "\n");
 			Forecast entity = new Forecast(login, id, forecast[i]);
 			result = result & forecastDao.create(entity);
 		}
