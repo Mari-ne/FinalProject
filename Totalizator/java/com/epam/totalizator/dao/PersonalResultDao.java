@@ -22,7 +22,8 @@ public class PersonalResultDao extends AbstractDao<String, PersonalResult> {
 	private static final String SQL_SELECT_BY_LOGIN = "select user_login, last_bet, last_gain, all_bet, all_gain\r\n"
 			+ "from personal_result where user_login = ?";
 	private static final String SQL_UPDATE_LAST_BET = "update personal_result\r\n"
-			+ "set last_bet = ? where user_login = ?";
+			+ "set last_bet = ?\r\n"
+			+ "where user_login = ?";
 	private static final String SQL_SELECT_ALL_WITH_BETS = "select user_login, last_bet, last_gain, all_bet, all_gain\r\n"
 			+ "from personal_result\r\n"
 			+ "where last_bet is not null";
@@ -129,8 +130,8 @@ public class PersonalResultDao extends AbstractDao<String, PersonalResult> {
 		PreparedStatement stat = null;
 		try(Connection con = ConnectionPool.getInstance().takeConnection()){
 			stat = con.prepareStatement(SQL_UPDATE_LAST_BET);
-			stat.setString(1, entity.getUserLogin());
-			stat.setBigDecimal(2, entity.getLastBet());
+			stat.setBigDecimal(1, entity.getLastBet());
+			stat.setString(2, entity.getUserLogin());
 			stat.executeUpdate();
 		}catch(SQLException e) {
 			throw new ProjectException(e);
@@ -139,5 +140,4 @@ public class PersonalResultDao extends AbstractDao<String, PersonalResult> {
 		}
 		return entity;
 	}
-
 }
