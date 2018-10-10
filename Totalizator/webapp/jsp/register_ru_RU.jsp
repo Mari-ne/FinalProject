@@ -39,7 +39,7 @@
 		      <input required type = "email" id = 'email' name = 'email' placeholder = 'Эл. почта'></input>
 		      <span></span>
 		    </div>
-		    <input type = "hidden" name = "role" value = "user">
+		    <input type = "hidden" name = "role" value = "User">
 		    <button type = 'submit' class = 'author'>Подтвердить</button>
 		    <button type = 'reset' class = 'author'>Сбросить</button> 
 	    </form>

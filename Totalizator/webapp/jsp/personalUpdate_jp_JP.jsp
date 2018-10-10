@@ -26,43 +26,45 @@
   	</div>
 	<c:import url="..\WEB-INF\jspf\sidenav_jp_JP.jsp" />
 	<div class = "content">
-		<form method="post" action="Controller" style="float:left">
-			<input type="hidden" name="command" value="user_update">
-			<table class = "personal">
-				<caption>データ変更</caption>
-				<tr>
-					<td>ユーザー名:</td>
-					<td><input type="text" value="${sessionScope.user.login}" disabled></td>
-				</tr>
-				<tr>
-					<td>Eメル:</td>
-					<td><input type="email" value="${sessionScope.user.email}" name="email"></td>
-				</tr>
-				<c:if test="${sessionScope.user.role == 'User'}">
-				<tr>
-					<td>カード:</td>
-					<c:if test="${sessionScope.user.cards != null}">
-						<td></td>
-						<c:forEach var="elem" items="${sessionScope.user.cards}" varStatus="status">
-							<tr>
-								<td></td>
-								<td>
-									<input type="text" value="${elem}" name = "card" oninput="input(this)" onchange="change(this)" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/>
-									<i class="material-icons" onclick="remove(this)">close</i>
-								</td>
-							</tr>
-						</c:forEach>					
-					</c:if>
+		<c:if test="${sessionScope.user.role != 'Administrator'}">
+			<form method="post" action="Controller" style="float:left">
+				<input type="hidden" name="command" value="user_update">
+				<table class = "personal">
+					<caption>データ変更</caption>
 					<tr>
-					    <td></td>
-					    <td><input type="text" name = "card" oninput="input(this)" onchange="change(this)" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/></td>
-					 </tr>
-				</tr>
-				</c:if>
-			</table>
-			<div></div>
-			<button type="submit">セーブ</button>
-		</form>
+						<td>ユーザー名:</td>
+						<td><input type="text" value="${sessionScope.user.login}" disabled></td>
+					</tr>
+					<tr>
+						<td>Eメル:</td>
+						<td><input type="email" value="${sessionScope.user.email}" name="email"></td>
+					</tr>
+					<c:if test="${sessionScope.user.role == 'User'}">
+					<tr>
+						<td>カード:</td>
+						<c:if test="${sessionScope.user.cards != null}">
+							<td></td>
+							<c:forEach var="elem" items="${sessionScope.user.cards}" varStatus="status">
+								<tr>
+									<td></td>
+									<td>
+										<input type="text" value="${elem}" name = "card" oninput="input(this)" onchange="change(this)" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/>
+										<i class="material-icons" onclick="remove(this)">close</i>
+									</td>
+								</tr>
+							</c:forEach>					
+						</c:if>
+						<tr>
+						    <td></td>
+						    <td><input type="text" name = "card" oninput="input(this)" onchange="change(this)" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}"/></td>
+						 </tr>
+					</tr>
+					</c:if>
+				</table>
+				<div></div>
+				<button type="submit">セーブ</button>
+			</form>
+		</c:if>
 		<form action="Controller" method="post" id="pass" onsubmit="return check();">	
 			<input type="hidden" name="command" value="password_change">
 			<table class = "personal">

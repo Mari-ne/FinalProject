@@ -39,7 +39,7 @@
 		      <input required type = "email" id = 'email' name = 'email' placeholder = 'Eメール'></input>
 		      <span></span>
 		    </div>
-		    <input type = "hidden" name = "role" value = "user">
+		    <input type = "hidden" name = "role" value = "User">
 		    <button type = 'submit' class = 'author'>登録</button>
 		    <button type = 'reset' class = 'author'>レセット</button> 
 	    </form>

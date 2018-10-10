@@ -18,7 +18,14 @@
 </head>
 <body>
 	<div id = "upperline">
-		<c:import url="..\WEB-INF\jspf\upper_ru_RU.jsp" />
+		<c:choose>
+			<c:when test="${sessionScope.user == null}">
+				<c:import url="..\WEB-INF\jspf\authorize_ru_RU.jsp" />
+			</c:when>
+			<c:otherwise>
+				<c:import url="..\WEB-INF\jspf\upper_ru_RU.jsp" />
+			</c:otherwise>
+		</c:choose>
 		<form action = "Controller" method = "get">
 		  	<input type = "hidden" name = 'page' value = "path.pool"></input>
 		  	<c:import url="..\WEB-INF\jspf\header.jsp" />
