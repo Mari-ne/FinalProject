@@ -61,6 +61,7 @@ public class MakeBetPageFilter implements Filter {
 				dispatcher = req.getRequestDispatcher(PageManager.getPage("path.error"));
 			}
 		} catch (ProjectException e) {
+			org.apache.log4j.Logger.getRootLogger().error(e.getMessage());
 			dispatcher = req.getRequestDispatcher(PageManager.getPage("path.error"));
 		}		
 		chain.doFilter(request, response);
