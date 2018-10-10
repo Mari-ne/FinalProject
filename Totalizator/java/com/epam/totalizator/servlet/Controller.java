@@ -21,12 +21,10 @@ import com.epam.totalizator.util.ServiceThread;
 @WebServlet(urlPatterns = {"/"})
 public class Controller extends HttpServlet {
 
-	@Override
-	public void init() throws ServletException {
+	public Controller() {
 		ServiceThread thread = new ServiceThread();
 		thread.setDaemon(true);
 		thread.start();
-		super.init();
 	}
 	
 	@Override
@@ -51,13 +49,12 @@ public class Controller extends HttpServlet {
     	if(command.isPresent()) {
 	    	try {
 				page = command.get().execute(request);
-		    	if(page.isPresent()) {
-		    		dispatcher = getServletContext().getRequestDispatcher(page.get());
-		    	} else {
-		    		dispatcher = getServletContext().getRequestDispatcher(PageManager.getPage("path.error"));
+		    	if(!page.isPresent()) {
+		    		page = Optional.of(PageManager.getPage("path.error"));
 		    	}	    	
 			} catch (ProjectException e) {
-				dispatcher = getServletContext().getRequestDispatcher(PageManager.getPage("path.error"));
+				org.apache.log4j.Logger.getRootLogger().error(e.getMessage());
+				page = Optional.of(PageManager.getPage("path.error"));
 			}
 			request.createRequest(req);
 			resp.sendRedirect(req.getContextPath() + page.get());
