@@ -30,12 +30,9 @@ public class PasswordChangeCommand extends AbstractCommand {
 				req.setSessionAttribute("user", user);
 				page = PageManager.getPage("path.personalData");
 			}
-			
-			page = PageManager.getPage("path.personalData");
 		} catch (InvalidAttributesException e) {
 			
 		}
 		return Optional.ofNullable(page);
 	}
-
 }
