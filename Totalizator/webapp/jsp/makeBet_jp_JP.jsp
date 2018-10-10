@@ -37,12 +37,12 @@
 					<tr>
 						<td><c:out value="${elem.id}"/></td>
 						<td>
-							<input type="hidden" name="id" value="${elem.sport}">
+							<input type="hidden" name="id" value="${elem.id}">
 							<c:out value="${elem.sport}"/></td>
 						<td>
 							<select name = "forecast">
 								<option value="1"><c:out value="${elem.team1}" /></option>
-								<option value="x">Draw</option>
+								<option value="x">引き分け</option>
 								<option value="2"><c:out value="${elem.team2}"/></option>
 							</select>
 						</td>
