@@ -52,7 +52,7 @@ public class Result extends Entity {
 	}
 
 	public void addBet(BigDecimal bet) {
-		bets.add(bet);
+		bets = bets.add(bet);
 	}
 	
 	public int getPoolPart() {
