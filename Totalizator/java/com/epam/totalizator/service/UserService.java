@@ -3,7 +3,6 @@ package com.epam.totalizator.service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 
 import com.epam.totalizator.dao.ForecastDao;
@@ -12,7 +11,7 @@ import com.epam.totalizator.dao.UserDao;
 import com.epam.totalizator.entity.Forecast;
 import com.epam.totalizator.entity.PersonalResult;
 import com.epam.totalizator.entity.User;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.Validator;
 
 public class UserService {
@@ -75,8 +74,8 @@ public class UserService {
 		return perResDao.findById(login);
 	}
 	
-	public static List<Forecast> getForecasts(String login, Locale lang) throws ProjectException{
-		return forecastDao.findByLoginWithNames(login, lang.getLanguage().toUpperCase());
+	public static List<Forecast> getForecasts(String login, String lang) throws ProjectException{
+		return forecastDao.findByLoginWithNames(login, lang.toUpperCase());
 	}
 	
 	public static Error userUpdate(User user, String newEmail, List<String> newCards) throws ProjectException {
@@ -125,12 +124,10 @@ public class UserService {
 		return Error.NONE;
 	}
 	
-	public static boolean makeBet(String login, String[] ids, String[] forecast, BigDecimal bet) throws ProjectException{
+	public static boolean makeBet(String login, String[] ids, String[] forecast, BigDecimal bet, String card) throws ProjectException{
 		boolean result = true;
-		org.apache.log4j.Logger.getRootLogger().info(ids.length + "\n");
 		for(int i = 0; i < ids.length; i ++) {
 			int id = Integer.parseInt(ids[i]);
-			org.apache.log4j.Logger.getRootLogger().info(login + " " + bet + " " + ids[i] + " " + forecast[i] + "\n");
 			Forecast entity = new Forecast(login, id, forecast[i]);
 			result = result & forecastDao.create(entity);
 		}

@@ -1,7 +1,6 @@
 package com.epam.totalizator.service;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Predicate;
 
 import com.epam.totalizator.dao.SportTeamDao;
@@ -9,23 +8,23 @@ import com.epam.totalizator.dao.TeamVSDao;
 import com.epam.totalizator.entity.Sport;
 import com.epam.totalizator.entity.SportTeam;
 import com.epam.totalizator.entity.TeamVs;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 public class TeamService {
 	
 	private static TeamVSDao vsDao = new TeamVSDao();
 	private static SportTeamDao teamDao = new SportTeamDao();
 	
-	public static List<TeamVs> getStatistic(Locale lang) throws ProjectException{
-		return vsDao.findAllWithNames(lang.getLanguage().toUpperCase());
+	public static List<TeamVs> getStatistic(String lang) throws ProjectException{
+		return vsDao.findAllWithNames(lang.toUpperCase());
 	}
 	
-	public static List<SportTeam> getTeams(Locale lang) throws ProjectException{
-		return teamDao.findAllWithName(lang.getLanguage().toUpperCase());
+	public static List<SportTeam> getTeams(String lang) throws ProjectException{
+		return teamDao.findAllWithName(lang.toUpperCase());
 	}
 	
-	public static List<Sport> getSports(Locale lang) throws ProjectException{
-		return teamDao.findSport(lang.getLanguage().toUpperCase());
+	public static List<Sport> getSports(String lang) throws ProjectException{
+		return teamDao.findSport(lang.toUpperCase());
 	}
 	
 	public static boolean addTeam(int sport, String[] names) throws ProjectException{
@@ -35,7 +34,6 @@ public class TeamService {
 		if(result) {
 			result = result && teamDao.createLocalNames(team.getId(), names);
 			if(result) {
-				org.apache.log4j.Logger.getRootLogger().info("hi\n");
 				List<SportTeam> teams = teamDao.findBySportId(sport);
 				Predicate<SportTeam> predicate = t-> t.getId() == team.getId();
 				teams.removeIf(predicate);

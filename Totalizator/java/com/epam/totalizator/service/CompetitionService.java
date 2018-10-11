@@ -2,19 +2,18 @@ package com.epam.totalizator.service;
 
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.Locale;
 
 import com.epam.totalizator.dao.CompetitionDao;
 import com.epam.totalizator.entity.Competition;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.ServiceThread;
 
 public class CompetitionService {
 
 	private static CompetitionDao compDao = new CompetitionDao();
 	
-	public static List<Competition> constructMainTable(Locale lang) throws ProjectException{
-		return compDao.findForLastMounth(lang.getLanguage().toUpperCase());
+	public static List<Competition> constructMainTable(String lang) throws ProjectException{
+		return compDao.findForLastMounth(lang.toUpperCase());
 	}
 	
 	public static boolean addCompetition(int sport, int team1, int team2, Timestamp start, Timestamp finish) throws ProjectException{
@@ -31,7 +30,7 @@ public class CompetitionService {
 		return compDao.create(compet);
 	}
 	
-	public static List<Competition> getBettable(Locale lang) throws ProjectException{
-		return compDao.findBettableWithName(lang.getLanguage().toUpperCase());
+	public static List<Competition> getBettable(String lang) throws ProjectException{
+		return compDao.findBettableWithName(lang.toUpperCase());
 	}
 }

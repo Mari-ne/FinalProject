@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.epam.totalizator.dao.ResultDao;
 import com.epam.totalizator.entity.Result;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 public class ResultService {
 
