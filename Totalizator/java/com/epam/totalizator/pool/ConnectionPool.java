@@ -11,8 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import com.mysql.jdbc.Driver;
 
 import com.epam.totalizator.pool.db.DbParameter;
-import com.epam.totalizator.pool.db.DbResourceManager;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 import org.apache.log4j.Logger;
 
@@ -24,8 +23,8 @@ public class ConnectionPool {
 	private String url;
 	private String user;
 	private String password;
-	private int maxPoolSize;
-	private int minPoolSize;
+	private int maxPoolSize = 10;
+	private int minPoolSize = 3;
 		
 	private AtomicInteger counter = new AtomicInteger(0);
 	//private static int counter; //count, how many connections is busy right now
@@ -41,9 +40,7 @@ public class ConnectionPool {
 			maxPoolSize = Integer.parseInt(DbParameter.DB_MAXPOOLSIZE.getValue());
 			minPoolSize = Integer.parseInt(DbParameter.DB_MINPOOLSIZE.getValue());
 		} catch(NumberFormatException e) {
-			LOGGER.error(e.getMessage());
-			maxPoolSize = 10;
-			minPoolSize = 3;
+			LOGGER.error(e);
 		}
 	}
 	
@@ -56,15 +53,15 @@ public class ConnectionPool {
 					ProxyConnection connect = new ProxyConnection(DriverManager.getConnection(url, user, password));
 					connections.add(connect);
 				} catch(SQLException ex) {
-					LOGGER.error(ex.getMessage());
+					LOGGER.error(ex);
 				}
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException();
+			throw new RuntimeException(e);
 		}
 		if(connections.isEmpty()) {
 			LOGGER.fatal("There is no connections in pool");
-			throw new RuntimeException();
+			throw new RuntimeException("There is no conncetion in pool");
 		}
 	}
 	
