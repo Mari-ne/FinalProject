@@ -6,6 +6,10 @@ import javax.servlet.annotation.WebListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import org.apache.log4j.Logger;
+
+import com.epam.totalizator.util.ServiceThread;
+
 /**
  * Application Lifecycle Listener implementation class SessionListener
  *
@@ -13,6 +17,8 @@ import javax.servlet.http.HttpSessionListener;
 @WebListener
 public class SessionListener implements HttpSessionListener {
 
+	private static final Logger LOGGER = Logger.getRootLogger();
+	
     /**
      * Default constructor. 
      */
@@ -22,9 +28,10 @@ public class SessionListener implements HttpSessionListener {
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent se)  { 
-    	org.apache.log4j.Logger.getRootLogger().debug("New session was created");
+    	LOGGER.debug("New session was created");
     	
-    	se.getSession().setAttribute("lang", new Locale("ru"));
+    	se.getSession().setAttribute("lang", "en");
+    	LOGGER.info(se.getSession().getAttribute("lang") + "\n");
     	se.getSession().setAttribute("user", null);
     }
 
@@ -32,7 +39,7 @@ public class SessionListener implements HttpSessionListener {
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */
     public void sessionDestroyed(HttpSessionEvent se)  { 
-    	org.apache.log4j.Logger.getRootLogger().debug("Session was destroyed");
+    	LOGGER.debug("Session was destroyed");
     	se.getSession().removeAttribute("lang");
     	se.getSession().removeAttribute("user");
     }

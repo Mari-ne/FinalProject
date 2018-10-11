@@ -11,20 +11,26 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.epam.totalizator.command.AbstractCommand;
 import com.epam.totalizator.command.CommandFactory;
 import com.epam.totalizator.pool.ConnectionPool;
 import com.epam.totalizator.util.PageManager;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.ServiceThread;
 
 @WebServlet(urlPatterns = {"/"})
 public class Controller extends HttpServlet {
 
+	private static final Logger LOGGER = Logger.getRootLogger();
+	
 	public Controller() {
+		/*
 		ServiceThread thread = new ServiceThread();
 		thread.setDaemon(true);
 		thread.start();
+		*/
 	}
 	
 	@Override
@@ -53,7 +59,7 @@ public class Controller extends HttpServlet {
 		    		page = Optional.of(PageManager.getPage("path.error"));
 		    	}	    	
 			} catch (ProjectException e) {
-				org.apache.log4j.Logger.getRootLogger().error(e.getMessage());
+				LOGGER.error(e);
 				page = Optional.of(PageManager.getPage("path.error"));
 			}
 			request.createRequest(req);
@@ -67,7 +73,7 @@ public class Controller extends HttpServlet {
     	try {
 			ConnectionPool.getInstance().closePool();
 		} catch (SQLException e) {
-			
+			LOGGER.error(e);
 		}
     	super.destroy();
     }
