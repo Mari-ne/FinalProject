@@ -2,7 +2,6 @@ package com.epam.totalizator.filter;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -15,22 +14,27 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import com.epam.totalizator.entity.Competition;
 import com.epam.totalizator.service.CompetitionService;
-import com.epam.totalizator.service.ResultService;
 import com.epam.totalizator.util.PageManager;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 /**
  * Servlet Filter implementation class MainPageFillter
  */
-@WebFilter(urlPatterns = { "/jsp/main_ru_RU.jsp", "/jsp/main_en_EN.jsp", "/jsp/main_jp_JP.jsp" },
+@WebFilter(urlPatterns = { "/jsp/main.jsp" },
 dispatcherTypes = {
 		DispatcherType.FORWARD,
 		DispatcherType.REQUEST
 })
 public class MainPageFillter implements Filter {
 
+	private static final Logger LOGGER= Logger.getRootLogger();
+	private static final String PARAM_LANG = "lang";
+	private static final String PARAM_LIST = "list"; 
+	
     /**
      * Default constructor. 
      */
@@ -48,9 +52,10 @@ public class MainPageFillter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		RequestDispatcher dispatcher = null;
 		try {
-			List<Competition> competitions = CompetitionService.constructMainTable((Locale)req.getSession().getAttribute("lang"));
-			request.setAttribute("list", competitions);
+			List<Competition> competitions = CompetitionService.constructMainTable((String)req.getSession().getAttribute(PARAM_LANG));
+			request.setAttribute(PARAM_LIST, competitions);
 		} catch (ProjectException e) {
+			LOGGER.error(e);
 			dispatcher = req.getRequestDispatcher(PageManager.getPage("path.error"));
 		}		
 		chain.doFilter(request, response);
