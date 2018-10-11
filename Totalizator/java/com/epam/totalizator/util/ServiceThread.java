@@ -24,6 +24,7 @@ import com.epam.totalizator.entity.Forecast;
 import com.epam.totalizator.entity.PersonalResult;
 import com.epam.totalizator.entity.Result;
 import com.epam.totalizator.entity.User;
+import com.epam.totalizator.exception.ProjectException;
 
 
 public class ServiceThread extends Thread {
@@ -81,7 +82,6 @@ public class ServiceThread extends Thread {
 				try {
 					List<Competition> list = dao.findExpected();
 					if(!list.isEmpty()) {
-						LOGGER.info("first: " + list.size() + "\n");
 						for(int i = 0; i < list.size(); i ++) {
 							c ++;
 							list.get(i).setState("Completed");
@@ -114,14 +114,11 @@ public class ServiceThread extends Thread {
 			//find amount of correct forecast for each of user
 			countCorrect(completed, forecasts, correct);
 			//find quantity of betters and amount of bets for each quantity of correct forecast
-			LOGGER.info(Math.ceil(number.get() / 2) + "\n");
 			for(Map.Entry<String, Integer> elem : correct.entrySet()) {
-				LOGGER.info(elem.getKey() + ": " + elem.getValue() + "\n");
 				if(elem.getValue().intValue() > Math.ceil(number.get() / 2)) {
 					LOGGER.debug("Have enough: " + elem.getKey() + " - correct " + elem.getValue());
 					//better can get gain only if he has more then half of correct forecasts
-					BigDecimal bet = perResult.get(Finder.findPersonalResult(elem.getKey(), perResult)).getLastBet();	
-					LOGGER.debug("bet: " + bet);
+					BigDecimal bet = perResult.get(Finder.findPersonalResult(elem.getKey(), perResult)).getLastBet();
 					int index = Finder.findResult(elem.getValue().intValue(), results);
 					results.get(index).addBet(bet);
 					results.get(index).addBetter();
@@ -134,15 +131,19 @@ public class ServiceThread extends Thread {
 			//find coefficient 
 			for(int i = 0; i < results.size(); i ++) {
 				Result r = results.get(i);
-				LOGGER.info(r.getPool().doubleValue() + "/" + r.getBets().doubleValue() + "=" + r.getPool().divide(r.getBets()).doubleValue() + "\n");
-				r.setCoefficient(r.getPool().divide(r.getBets()));
+				if(r.getBets().doubleValue() == 0.0)
+					continue;
+				r.setCoefficient(r.getPool().divide(r.getBets(), RoundingMode.DOWN).setScale(2));
+				resultDao.update(r);
 			}
 			//find amount of gain for each user, who gain something
 			for(int i = 0; i < perResult.size(); i ++) {
+				if(correct.get(perResult.get(i).getUserLogin()) == null)
+					continue;			
 				BigDecimal coef = results.get(Finder.findResult(correct.get(perResult.get(i).getUserLogin()), results)).getCoefficient();
-				BigDecimal lastBet = perResult.get(i).getLastBet();				
+				BigDecimal lastBet = perResult.get(i).getLastBet();			
 				perResult.get(i).setLastGain(lastBet.multiply(coef).setScale(2, RoundingMode.FLOOR));
-				personDao.update(perResult.get(i));
+				personDao.updateGain(perResult.get(i));
 				sendResults(true, perResult.get(i).getLastGain(), userDao.findById(perResult.get(i).getUserLogin()).get());
 			}
 		} catch (ProjectException e) {
