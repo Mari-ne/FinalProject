@@ -12,7 +12,7 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 
 import com.epam.totalizator.pool.ConnectionPool;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.entity.Result;
 
 public class ResultDao extends AbstractDao<Integer, Result> {

@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.totalizator.entity.PersonalResult;
 import com.epam.totalizator.pool.ConnectionPool;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 public class PersonalResultDao extends AbstractDao<String, PersonalResult> {
 
@@ -23,6 +23,9 @@ public class PersonalResultDao extends AbstractDao<String, PersonalResult> {
 			+ "from personal_result where user_login = ?";
 	private static final String SQL_UPDATE_LAST_BET = "update personal_result\r\n"
 			+ "set last_bet = ?\r\n"
+			+ "where user_login = ?";
+	private static final String SQL_UPDATE_LAST_GAIN = "update personal_result\r\n"
+			+ "set last_gain = ?\r\n"
 			+ "where user_login = ?";
 	private static final String SQL_SELECT_ALL_WITH_BETS = "select user_login, last_bet, last_gain, all_bet, all_gain\r\n"
 			+ "from personal_result\r\n"
@@ -131,6 +134,21 @@ public class PersonalResultDao extends AbstractDao<String, PersonalResult> {
 		try(Connection con = ConnectionPool.getInstance().takeConnection()){
 			stat = con.prepareStatement(SQL_UPDATE_LAST_BET);
 			stat.setBigDecimal(1, entity.getLastBet());
+			stat.setString(2, entity.getUserLogin());
+			stat.executeUpdate();
+		}catch(SQLException e) {
+			throw new ProjectException(e);
+		} finally {
+			closeStatement(stat);			
+		}
+		return entity;
+	}
+
+	public PersonalResult updateGain(PersonalResult entity) throws ProjectException{
+		PreparedStatement stat = null;
+		try(Connection con = ConnectionPool.getInstance().takeConnection()){
+			stat = con.prepareStatement(SQL_UPDATE_LAST_GAIN);
+			stat.setBigDecimal(1, entity.getLastGain());
 			stat.setString(2, entity.getUserLogin());
 			stat.executeUpdate();
 		}catch(SQLException e) {

@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 
 import com.epam.totalizator.entity.Entity;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 public abstract class AbstractDao <K, T extends Entity> {
 	

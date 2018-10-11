@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.totalizator.entity.User;
 import com.epam.totalizator.pool.ConnectionPool;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 public class UserDao extends AbstractDao<String, User> {
 
@@ -72,7 +72,6 @@ public class UserDao extends AbstractDao<String, User> {
 				users.add(user);
 			}
 		} catch(SQLException e) {
-			LOGGER.error(e.getMessage());
 			throw new ProjectException(e);
 		} finally {
 			closeStatement(stat, result);			
@@ -97,7 +96,6 @@ public class UserDao extends AbstractDao<String, User> {
 				user.setRole(result.getString(ROLE));
 			}
 		} catch(SQLException e) {
-			LOGGER.error(e.getMessage());
 			throw new ProjectException(e);
 		} finally {
 			closeStatement(stat, result);			
@@ -122,7 +120,6 @@ public class UserDao extends AbstractDao<String, User> {
 				users.add(user);
 			}
 		} catch(SQLException e) {
-			LOGGER.error(e.getMessage());
 			throw new ProjectException(e);
 		} finally {
 			closeStatement(stat, result);			
@@ -151,7 +148,6 @@ public class UserDao extends AbstractDao<String, User> {
 			}
 			
 		} catch(SQLException e) {
-			LOGGER.error(e.getMessage());
 			throw new ProjectException(e);
 		} finally {
 			closeStatement(stat, result);			
@@ -171,7 +167,6 @@ public class UserDao extends AbstractDao<String, User> {
 				cards.add(result.getString("card"));
 			}
 		} catch(SQLException e) {
-			LOGGER.error(e.getMessage());
 			throw new ProjectException(e);
 		} finally {
 			closeStatement(stat, result);			
@@ -225,7 +220,6 @@ public class UserDao extends AbstractDao<String, User> {
 				stat.executeUpdate();
 			}			
 		} catch(SQLException e) {
-			LOGGER.error(e.getMessage());
 			throw new ProjectException(e);
 		} finally {
 			closeStatement(stat);			
@@ -242,7 +236,6 @@ public class UserDao extends AbstractDao<String, User> {
 			stat.setString(3, entity.getLogin());
 			stat.executeUpdate();
 		} catch(SQLException e) {
-			LOGGER.error(e.getMessage());
 			throw new ProjectException(e);
 		} finally {
 			closeStatement(stat);
@@ -258,7 +251,6 @@ public class UserDao extends AbstractDao<String, User> {
 			stat.setString(2, card);
 			stat.executeUpdate();	
 		} catch(SQLException e) {
-			LOGGER.error(e.getMessage());
 			throw new ProjectException(e);
 		} finally {
 			closeStatement(stat);			

@@ -1,7 +1,6 @@
 package com.epam.totalizator.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +11,7 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 
 import com.epam.totalizator.pool.ConnectionPool;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.entity.Competition;
 
 public class CompetitionDao extends AbstractDao<Integer, Competition> {
@@ -533,4 +532,5 @@ public class CompetitionDao extends AbstractDao<Integer, Competition> {
 		}
 		return entity;
 	}
+
 }

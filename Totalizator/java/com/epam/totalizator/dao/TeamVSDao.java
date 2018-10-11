@@ -12,8 +12,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.totalizator.entity.TeamVs;
 import com.epam.totalizator.pool.ConnectionPool;
-import com.epam.totalizator.util.Key;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 public class TeamVSDao extends AbstractDao<Key<Integer, Integer>, TeamVs> {
 

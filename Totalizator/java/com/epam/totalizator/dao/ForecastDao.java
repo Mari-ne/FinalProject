@@ -12,8 +12,7 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 
 import com.epam.totalizator.pool.ConnectionPool;
-import com.epam.totalizator.util.Key;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.entity.Forecast;
 
 public class ForecastDao extends AbstractDao<Key<String, Integer>, Forecast> {

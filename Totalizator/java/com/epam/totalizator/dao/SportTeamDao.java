@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import com.epam.totalizator.entity.Sport;
 import com.epam.totalizator.entity.SportTeam;
 import com.epam.totalizator.pool.ConnectionPool;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 public class SportTeamDao extends AbstractDao<Integer, SportTeam> {
 
