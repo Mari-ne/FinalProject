@@ -10,13 +10,14 @@ import com.epam.totalizator.entity.User;
 import com.epam.totalizator.service.UserService;
 import com.epam.totalizator.servlet.SessionRequest;
 import com.epam.totalizator.util.PageManager;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.Validator;
 
 public class LoginCommand extends AbstractCommand {
 
 	private static final String PARAM_LOGIN = "login";
 	private static final String PARAM_PASSWORD = "password";
+	private static final String PARAM_USER = "user";
 	
 	private static final Logger LOGGER = Logger.getRootLogger();
 	
@@ -31,11 +32,11 @@ public class LoginCommand extends AbstractCommand {
 			password = Validator.passwordHasher(password);
 			Optional<User> user = UserService.isAutorized(login, password);
 			if(user.isPresent()) {
-				req.setSessionAttribute("user", user.get());
+				req.setSessionAttribute(PARAM_USER, user.get());
 				page = PageManager.getPage("path.personalData");
 			}
 		} catch (InvalidAttributesException e) {
-			throw new ProjectException(e);
+			LOGGER.warn(e);
 		}
 		return Optional.ofNullable(page);
 	}

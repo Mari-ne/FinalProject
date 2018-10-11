@@ -8,20 +8,21 @@ import org.apache.log4j.Logger;
 
 import com.epam.totalizator.service.ResultService;
 import com.epam.totalizator.servlet.SessionRequest;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 public class SetPoolCommand extends AbstractCommand {
 
 	private static final Logger LOGGER = Logger.getRootLogger();
+	private static final String PARAM_POOL = "pool";
 	
 	@Override
 	public Optional<String> execute(SessionRequest req) throws ProjectException {
 		String page = null;
 		try {
-			String[] parts = req.getParametr("pool");
+			String[] parts = req.getParametr(PARAM_POOL);
 			ResultService.changePool(parts);
 		} catch (InvalidAttributesException e) {
-			LOGGER.warn(e.getMessage());
+			LOGGER.warn(e);
 		}
 		return Optional.ofNullable(page);
 	}

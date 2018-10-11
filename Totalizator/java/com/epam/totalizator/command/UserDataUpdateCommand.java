@@ -6,25 +6,32 @@ import java.util.Optional;
 
 import javax.naming.directory.InvalidAttributesException;
 
+import org.apache.log4j.Logger;
+
 import com.epam.totalizator.entity.User;
 import com.epam.totalizator.service.UserService;
 import com.epam.totalizator.servlet.SessionRequest;
 import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.util.PageManager;
-import com.epam.totalizator.util.ProjectException;
+import com.epam.totalizator.exception.ProjectException;
 
 public class UserDataUpdateCommand extends AbstractCommand {
+	
+	private static final Logger LOGGER = Logger.getRootLogger();
 	private static final String PARAM_MESSAGE = "message";
+	private static final String PARAM_USER = "user";
+	private static final String PARAM_EMAIL = "email";
+	private static final String PARAM_CARD = "card";
 
 	@Override
 	public Optional<String> execute(SessionRequest req) throws ProjectException {
 		String page = null;
 		try {
-			User user = (User) req.getSessionAttribute("user");
-			String email = req.getParametr("email")[0];
+			User user = (User) req.getSessionAttribute(PARAM_USER);
+			String email = req.getParametr(PARAM_EMAIL)[0];
 			UserService.Error err;
 			if(user.getRole().equals("User")) {
-				String[] card = req.getParametr("card");
+				String[] card = req.getParametr(PARAM_CARD);
 				List <String> cards = new ArrayList<>();
 				for(int i = 0; i < card.length - 1; i ++) {
 					cards.add(card[i]);
@@ -35,16 +42,13 @@ public class UserDataUpdateCommand extends AbstractCommand {
 			}
 			if(!err.equals(UserService.Error.NONE)) {
 				req.addAttribute(PARAM_MESSAGE, MessageManager.getMessage(err.getValue()));
-				org.apache.log4j.Logger.getRootLogger().info(MessageManager.getMessage(err.getValue()) + "\n");
 				page = PageManager.getPage("path.personalUpdate");
 			}else {
-				req.setSessionAttribute("user", user);
+				req.setSessionAttribute(PARAM_USER, user);
 				page = PageManager.getPage("path.personalData");
 			}
-			
-			page = PageManager.getPage("path.personalData");
 		} catch (InvalidAttributesException e) {
-			org.apache.log4j.Logger.getRootLogger().warn(e.getMessage());
+			LOGGER.warn(e);
 		}
 		return Optional.ofNullable(page);
 	}
