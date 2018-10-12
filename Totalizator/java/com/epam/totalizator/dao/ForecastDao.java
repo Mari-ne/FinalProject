@@ -12,6 +12,7 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 
 import com.epam.totalizator.pool.ConnectionPool;
+import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.entity.Forecast;
 
@@ -134,17 +135,7 @@ public class ForecastDao extends AbstractDao<Key<String, Integer>, Forecast> {
 				Forecast forecast = new Forecast();
 				forecast.setCompetitionId(result.getInt(COMPETITION_ID));
 				if(result.getString(RESULT).charAt(0) == 'x') {
-					switch(lang) {
-					case "EN":
-						forecast.setResultFull("Draw");
-						break;
-					case "JP":
-						forecast.setResultFull("引き分け");
-						break;
-					case "RU":
-						forecast.setResultFull("Ничья");
-						break;
-					}
+					forecast.setResultFull(MessageManager.getMessage("forecast.draw"));
 				}else {
 					forecast.setResultFull(result.getString(RESULT));
 				}

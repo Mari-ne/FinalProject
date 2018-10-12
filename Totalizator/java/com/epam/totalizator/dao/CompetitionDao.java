@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.apache.log4j.Logger;
 
 import com.epam.totalizator.pool.ConnectionPool;
+import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.entity.Competition;
 
@@ -348,32 +349,18 @@ public class CompetitionDao extends AbstractDao<Integer, Competition> {
 				comp.setStart(result.getTimestamp(START));
 				comp.setFinish(result.getTimestamp(FINISH));
 				comp.setState(result.getString(STATE));
-				if(!lang.equals("EN")) {
-					switch(comp.getState()) {
-						case "Acceptence of bets":{
-							if(lang.equals("RU")) {
-								comp.setState("Принятие ставок");
-							} else {
-								comp.setState("賭けを受け入れます");
-							}
-							break;
-						}
-						case "Completion of bets":{
-							if(lang.equals("RU")) {
-								comp.setState("Ставки приняты");
-							} else {
-								comp.setState("賭けは受け入り終わりました");
-							}
-							break;
-						}
-						case "Completed":{
-							if(lang.equals("RU")) {
-								comp.setState("Завершен");
-							} else {
-								comp.setState("終了");
-							}
-							break;
-						}
+				switch(comp.getState()) {
+					case "Acceptence of bets":{
+						comp.setState(MessageManager.getMessage("competition.state.accept"));
+						break;
+					}
+					case "Completion of bets":{
+						comp.setState(MessageManager.getMessage("competition.state.wait"));
+						break;
+					}
+					case "Completed":{
+						comp.setState(MessageManager.getMessage("competition.state.completed"));
+						break;
 					}
 				}
 				comp.setResult(result.getString(RESULT));				
