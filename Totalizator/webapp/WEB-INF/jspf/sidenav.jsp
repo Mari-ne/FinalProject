@@ -17,7 +17,7 @@
  	<a href="${pageContext.request.contextPath}/jsp/main.jsp"><fmt:message key="sidenav.competition" bundle="${rb}" /><i class="fa fa-calendar"></i></a>
   	<a href="${pageContext.request.contextPath}/jsp/statistic.jsp"><fmt:message key="sidenav.statistic" bundle="${rb}" /><i class="fa fa-line-chart"></i></a>
 	<a href="${pageContext.request.contextPath}/jsp/teams.jsp"><fmt:message key="sidenav.team" bundle="${rb}" /><i class="fa fa-info-circle"></i></a>
-	<a href="#"><fmt:message key="sidenav.bet" bundle="${rb}" /><i class="fa fa-users"></i></a>
+	<a href="${pageContext.request.contextPath}/jsp/bets.jsp"><fmt:message key="sidenav.bet" bundle="${rb}" /><i class="fa fa-users"></i></a>
 	<a href="${pageContext.request.contextPath}/jsp/pool.jsp"><fmt:message key="sidenav.pool" bundle="${rb}" /><i class="fa fa-money"></i></a>
 	<c:if test="${sessionScope.user.role == 'Administrator'}">
 		<a href="${pageContext.request.contextPath}/jsp/user.jsp"><fmt:message key="sidenav.user" bundle="${rb}" /><i class="fa fa-group"></i></a>
