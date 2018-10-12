@@ -3,25 +3,13 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib prefix="ctg" uri="/WEB-INF/tld/custom.tld" %>
-<!DOCTYPE html>
-<html>
 <fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="pageContent" var="rb" />
+<!DOCTYPE html>
+<html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
-		<c:choose>
-			<c:when test="${sessionScope.lang == 'en'}">
-				<%@include file="../assets/css/enLang.css"%>
-			</c:when>
-			<c:when test="${sessionScope.lang == 'jp'}">
-				<%@include file="../assets/css/jpLang.css"%>
-			</c:when>
-			<c:otherwise>
-				<%@include file="../assets/css/ruLang.css"%>		
-			</c:otherwise>
-		</c:choose>
-		<%@include file="../assets/css/ruLang.css"%>
 	    <%@include file="../assets/css/body.css"%>
 	    <%@include file="../assets/css/button.css"%>
 	    <%@include file="../assets/css/input.css"%>	    
@@ -29,6 +17,23 @@
 	    <%@include file="../assets/css/link.css"%>
 	    <%@include file="../assets/css/icon.css"%>
 	</style>
+	<c:choose>
+		<c:when test="${sessionScope.lang == 'en'}">
+			<style>
+				<%@include file="../assets/css/enLang.css"%>
+			</style>
+		</c:when>
+		<c:when test="${sessionScope.lang == 'jp'}">
+			<style>
+				<%@include file="../assets/css/jpLang.css"%>
+			</style>
+		</c:when>
+		<c:otherwise>
+			<style>
+				<%@include file="../assets/css/ruLang.css"%>
+			</style>		
+		</c:otherwise>
+	</c:choose>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<title><fmt:message key="main.title" bundle="${rb}" /></title>
 </head>

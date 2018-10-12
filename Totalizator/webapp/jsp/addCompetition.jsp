@@ -4,12 +4,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="pageContent" var="rb" />
+<fmt:setBundle basename="message" var="mes" />
 <!DOCTYPE html>
-<html lang="${sessionScope.lang}">
+<html>
 <head>
 	<meta charset="utf-8">
 	<style>
-		<%@include file="../assets/css/enLang.css"%>
 	    <%@include file="../assets/css/body.css"%>
 	    <%@include file="../assets/css/button.css"%>
 	    <%@include file="../assets/css/input.css"%>	    
@@ -17,6 +17,23 @@
 	    <%@include file="../assets/css/link.css"%>
 	    <%@include file="../assets/css/icon.css"%>
 	</style>
+	<c:choose>
+		<c:when test="${sessionScope.lang == 'en'}">
+			<style>
+				<%@include file="../assets/css/enLang.css"%>
+			</style>
+		</c:when>
+		<c:when test="${sessionScope.lang == 'jp'}">
+			<style>
+				<%@include file="../assets/css/jpLang.css"%>
+			</style>
+		</c:when>
+		<c:otherwise>
+			<style>
+				<%@include file="../assets/css/ruLang.css"%>
+			</style>		
+		</c:otherwise>
+	</c:choose>
 	<title><fmt:message key="add.title" bundle="${rb}" /></title>
 </head>
 <body>

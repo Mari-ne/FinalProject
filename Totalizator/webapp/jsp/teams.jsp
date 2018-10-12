@@ -8,7 +8,6 @@
 <html>
 <head>
 	<style>
-		<%@include file="../assets/css/enLang.css"%>
 	    <%@include file="../assets/css/body.css"%>
 	    <%@include file="../assets/css/button.css"%>
 	    <%@include file="../assets/css/input.css"%>	    
@@ -16,6 +15,23 @@
 	    <%@include file="../assets/css/link.css"%>
 	    <%@include file="../assets/css/icon.css"%>
 	</style>
+	<c:choose>
+		<c:when test="${sessionScope.lang == 'en'}">
+			<style>
+				<%@include file="../assets/css/enLang.css"%>
+			</style>
+		</c:when>
+		<c:when test="${sessionScope.lang == 'jp'}">
+			<style>
+				<%@include file="../assets/css/jpLang.css"%>
+			</style>
+		</c:when>
+		<c:otherwise>
+			<style>
+				<%@include file="../assets/css/ruLang.css"%>
+			</style>		
+		</c:otherwise>
+	</c:choose>
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<title><fmt:message key="team.title" bundle="${rb}" /></title>
 </head>

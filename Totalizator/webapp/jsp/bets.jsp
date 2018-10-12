@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${sessionScope.lang}"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="pageContent" var="rb" />
 <!DOCTYPE html>
 <html>
@@ -32,7 +32,8 @@
 			</style>		
 		</c:otherwise>
 	</c:choose>
-	<title><fmt:message key="statistic.title" bundle="${rb}" /></title>
+	<meta charset="UTF-8">
+	<title><fmt:message key="bets.title" bundle="${rb}" /></title>
 </head>
 <body>
 	<div id = "upperline">
@@ -41,36 +42,40 @@
 				<c:import url="..\WEB-INF\jspf\authorize.jsp" />
 			</c:when>
 			<c:otherwise>
-				<c:import url="..\WEB-INF\jspf\upper.jsp" />
+				<c:import url="..\WEB-INF\jspf\upper_en_EN.jsp" />
 			</c:otherwise>
 		</c:choose>
 		<form action = "Controller" method = "get">
-		  	<input type = "hidden" name = 'page' value = "path.statistic"></input>
+		  	<input type = "hidden" name = 'page' value = "path.bets"></input>
 		  	<c:import url="..\WEB-INF\jspf\header.jsp" />
 		</form>
   	</div>
 	<c:import url="..\WEB-INF\jspf\sidenav.jsp" />
 	<div class = "content">
-		<div class = "scroll">
-			<table cellspacing="0">
-			  	<tr>
-					<th><fmt:message key="table.team1" bundle="${rb}" /></th>
-					<th><fmt:message key="table.team2" bundle="${rb}" /></th>
-					<th><fmt:message key="table.team1" bundle="${rb}" /> <fmt:message key="table.wins" bundle="${rb}" /></th>
-					<th><fmt:message key="table.team2" bundle="${rb}" /> <fmt:message key="table.wins" bundle="${rb}" /></th>
-					<th><fmt:message key="table.quantity" bundle="${rb}" /></th>
-				</tr>
-			  	<c:forEach var="elem" items="${list}" varStatus="status">
+		<c:choose>
+			<c:when test="${users != null}">
+				<table>
+					<caption><fmt:message key="bets.bets" bundle="${rb}" /></caption>
 					<tr>
-						<td><c:out value="${ elem.team1 }" /></td>
-						<td><c:out value="${ elem.team2 }" /></td>
-						<td><c:out value="${ elem.team1Wins}"/></td>
-						<td><c:out value="${ elem.team2Wins}"/></td>
-						<td><c:out value="${ elem.quantity }" /></td>
+						<th><fmt:message key="table.number" bundle="${rb}" /></th>
+						<c:forEach var="elem" items="${users}" varStatus="status">
+							<th><c:out value="${elem}"></c:out></th>
+						</c:forEach>
 					</tr>
-				</c:forEach>
-		  </table>
-		</div>
+					<c:forEach var="elem" items="${list}" varStatus="status">
+						<tr>
+							<td><c:out value="${elem[0].competitionId}"></c:out></td>
+							<c:forEach var="forecast" items="${elem}" varStatus="status">
+								<td><c:out value="${forecast.resultFull }"></c:out></td>
+							</c:forEach>
+						</tr>
+					</c:forEach>
+				</table>
+			</c:when>
+			<c:otherwise>
+				<fmt:message key="bets.error" bundle="${rb}" />
+			</c:otherwise>
+		</c:choose>
     </div>
 </body>
 </html>

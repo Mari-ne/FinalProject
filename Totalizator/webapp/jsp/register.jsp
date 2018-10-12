@@ -8,17 +8,6 @@
 <html>
 <head>
 	<style>
-	    <c:choose>
-			<c:when test="${sessionScope.lang == 'en'}">
-				<%@include file="../assets/css/enLang.css"%>
-			</c:when>
-			<c:when test="${sessionScope.lang == 'jp'}">
-				<%@include file="../assets/css/jpLang.css"%>
-			</c:when>
-			<c:otherwise>
-				<%@include file="../assets/css/ruLang.css"%>		
-			</c:otherwise>
-		</c:choose>
 	    <%@include file="../assets/css/body.css"%>
 	    <%@include file="../assets/css/button.css"%>
 	    <%@include file="../assets/css/input.css"%>	    
@@ -26,6 +15,23 @@
 	    <%@include file="../assets/css/link.css"%>
 	    <%@include file="../assets/css/icon.css"%>
 	</style>
+	<c:choose>
+		<c:when test="${sessionScope.lang == 'en'}">
+			<style>
+				<%@include file="../assets/css/enLang.css"%>
+			</style>
+		</c:when>
+		<c:when test="${sessionScope.lang == 'jp'}">
+			<style>
+				<%@include file="../assets/css/jpLang.css"%>
+			</style>
+		</c:when>
+		<c:otherwise>
+			<style>
+				<%@include file="../assets/css/ruLang.css"%>
+			</style>		
+		</c:otherwise>
+	</c:choose>
 	<title><fmt:message key="registration.title" bundle="${rb}" /></title>
 </head>
 <body>
@@ -38,25 +44,30 @@
   	</div>
 	<c:import url="..\WEB-INF\jspf\sidenav.jsp" />
 	<div class = "content">
-		<fmt:message key="placeHolder.login" var="login" bundle="${rb}"/>
-		<fmt:message key="placeHolder.password" var="password"  bundle="${rb}"/>
+		<fmt:message key="placeHolder.login" var="loginP" bundle="${rb}"/>
+		<fmt:message key="placeHolder.password" var="passwordP"  bundle="${rb}"/>
 		<fmt:message key="placeHolder.email" var="email"  bundle="${rb}"/>
 		<fmt:message key="registration.login" var="loginT" bundle="${rb}"/>
 		<fmt:message key="registration.password" var="passwordT"  bundle="${rb}"/>
-		<form action="Controller" method = "post">
+		<div>
+			<fmt:message key="registration.info"  bundle="${rb}"/>
+			<br>
+			<fmt:message key="registration.note"  bundle="${rb}"/>
+		</div>
+		<form action="Controller" method = "post" style="position:absolute; left:50%">
 			<input type = "hidden" name = "command" value = "register">
 		    <div>
-		      <input class = 'login' required type = 'text' id = 'login' name = 'login' pattern = '[\a\A\d-_]' placeholder = '${login}' minlength = '4' maxlength = '20' title = "${loginT }"></input>
-		      <span>${message}</span>
+		      <input class = 'login' required type = 'text' name = 'login' pattern = '[\a\A\d-_]' placeholder = '${loginP}' minlength = '4' maxlength = '20' title = "${loginT}">
 		    </div>
 		    <div>
-		      <input required type = 'password' id = 'password' name = 'password' pattern = '(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])\S{8,20}' placeholder = '${password}' minlength = '8', maxlength = '20' title = '${passwordT }'></input>
+		      <input required type = 'password' name = 'password' pattern = '(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])\S{8,20}' placeholder = '${passwordP}' minlength = '8' maxlength = '20' title = '${passwordT}'>
 		      <span></span>
 		    </div>
 		    <div>
 		      <input required type = "email" id = 'email' name = 'email' placeholder = '${email}'></input>
 		      <span></span>
 		    </div>
+		    <div>${message}</div>
 		    <input type = "hidden" name = "role" value = "User">
 		    <button type = 'submit' class = 'author'><fmt:message key="button.submit" bundle="${rb}" /></button>
 		    <button type = 'reset' class = 'author'><fmt:message key="button.reset" bundle="${rb}" /></button> 
