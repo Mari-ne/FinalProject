@@ -71,6 +71,14 @@
     <filter-class>com.epam.totalizator.filter.BetsPageFilter</filter-class>
   </filter>
   <session-config>
-  	<session-timeout>15</session-timeout>
+    <session-timeout>15</session-timeout>
   </session-config>
+  <listener>
+    <listener-class>com.epam.totalizator.servlet.ContextListener</listener-class>
+  </listener>
+  <filter>
+    <display-name>ErrorFilter</display-name>
+    <filter-name>ErrorFilter</filter-name>
+    <filter-class>com.epam.totalizator.filter.ErrorFilter</filter-class>
+  </filter>
 </web-app>
