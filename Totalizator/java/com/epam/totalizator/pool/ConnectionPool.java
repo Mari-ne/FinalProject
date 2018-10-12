@@ -11,6 +11,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import com.mysql.jdbc.Driver;
 
 import com.epam.totalizator.pool.db.DbParameter;
+import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.exception.ProjectException;
 
 import org.apache.log4j.Logger;
@@ -61,7 +62,7 @@ public class ConnectionPool {
 		}
 		if(connections.isEmpty()) {
 			LOGGER.fatal("There is no connections in pool");
-			throw new RuntimeException("There is no conncetion in pool");
+			throw new RuntimeException(MessageManager.getMessage("exc.pool"));
 		}
 	}
 	
@@ -88,7 +89,7 @@ public class ConnectionPool {
 				try {
 					con = new ProxyConnection(DriverManager.getConnection(url, user, password));
 				} catch (SQLException ex) {
-					throw new ProjectException("SQL exception in Connectoin Pool", ex);
+					throw new ProjectException(ex);
 				}
 			}
 			counter.incrementAndGet();
