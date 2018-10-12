@@ -16,6 +16,7 @@ body{
 
 form{
   display: inline;
+  padding: 20px;
 }
 
 #upperline{
@@ -29,4 +30,8 @@ form{
 button[name="lang"]{
 	position: relative;
 	float: right;
+}
+
+button{
+	
 }
