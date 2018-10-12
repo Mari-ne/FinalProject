@@ -31,37 +31,16 @@ function dateCheck(){
 
 function check(){
 	var err = document.getElementById("error");
-	var lang = document.getElementsByTagName("html")[0].lang;
 	var text="";
 	var result = true;
 	if(!teamsCheck()){
 		result = false;
-		switch(lang){
-		case "ru":
-			text += "Должны быть указаны различные команды";
-			break;
-		case "en":
-			text += "You must choose different teams";
-			break;
-		case "jp":
-			text += "異なるチームがなければなりません";
-			break;
-		}
+		text += "<fmt:message key='error.addCompetition.same' bundle='${mes}' />";
 	}
 	if(!dateCheck()){
-		text += "<br>"
+		text += "<br>";
 		result = false;
-		switch(lang){
-		case "ru":
-			text += "Соревнование должно начинаться не раньше чем через 4 часа, относительно нынешнего времени";
-			break;
-		case "en":
-			text += "Competition should start not earlier than 4 hours, relative to the current time";
-			break;
-		case "jp":
-			text += "競争は、げんざいの時刻と比較して4時間より早く開始してならない";
-			break;
-		}
+		text += "<fmt:message key='error.addCompetition.time' bundle='${mes}' />";
 	}
 	err.innerHTML = text;
 	return result;

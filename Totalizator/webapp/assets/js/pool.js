@@ -1,12 +1,3 @@
-var lang = document.getElementsByTagName("html")[0].lang;
-var error1 = {"ru":"Сумма должна равняться 100", 
-				"en":"Sum should be equal to 100",
-				"jp":"合計は１００でなければなりません"};
-
-var error2 = {"ru":"Часть пула не может быть 0", 
-			"en":"Pool part can't be 0",
-			"jp":"プールの一部は０にできません"};
-
 function manage(){
 	var a = document.getElementsByClassName("pool-info");
 	var aText = [];
@@ -60,13 +51,13 @@ function count(items){
 function check(){
 	var c = document.getElementById("count");
 	if(parseInt(c.innerHTML, 10) !== 100){
-		document.getElementById("error").innerHTML = error1[lang];
+		document.getElementById("error").innerHTML = "<fmt:message key='error.pool.summ' bundle='${mes}' />";
 		return false;
 	}
 	var pool = document.getElementsByClassName("pool");
 	for(var i = 0; i < pool.length; i ++){
 		if(parseInt(pool[i].value, 10) === 0){
-			document.getElementById("error").innerHTML = error2[lang];
+			document.getElementById("error").innerHTML += "<br><fmt:message key='error.pool.part' bundle='${mes}' />";
 			return false;
 		}
 	}
