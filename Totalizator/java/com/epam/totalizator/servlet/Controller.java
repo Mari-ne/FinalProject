@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,20 +17,14 @@ import com.epam.totalizator.command.CommandFactory;
 import com.epam.totalizator.pool.ConnectionPool;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
-import com.epam.totalizator.util.ServiceThread;
 
 @WebServlet(urlPatterns = {"/"})
 public class Controller extends HttpServlet {
-
-	private static final Logger LOGGER = Logger.getRootLogger();
 	
-	public Controller() {
-		/*
-		ServiceThread thread = new ServiceThread();
-		thread.setDaemon(true);
-		thread.start();
-		*/
-	}
+	private static final long serialVersionUID = 1L;
+	
+	private static final Logger LOGGER = Logger.getRootLogger();
+	private static final String PARAM_ERROR = "error";
 	
 	@Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) 
@@ -48,10 +41,9 @@ public class Controller extends HttpServlet {
     private void processing(HttpServletRequest req, HttpServletResponse resp) 
             throws ServletException, IOException{
     	Optional<String> page = Optional.empty();
-    	SessionRequest request = new SessionRequest(req);
+    	SessionRequestContainer request = new SessionRequestContainer(req);
     	CommandFactory factory = new CommandFactory();
     	Optional<AbstractCommand> command = factory.defineCommand(request);
-		RequestDispatcher dispatcher = null;
     	if(command.isPresent()) {
 	    	try {
 				page = command.get().execute(request);
@@ -60,11 +52,10 @@ public class Controller extends HttpServlet {
 		    	}	    	
 			} catch (ProjectException e) {
 				LOGGER.error(e);
-				page = Optional.of(PageManager.getPage("path.error"));
+				request.setSessionAttribute(PARAM_ERROR, e.getMessage());
 			}
 			request.createRequest(req);
 			resp.sendRedirect(req.getContextPath() + page.get());
-			//dispatcher.forward(req, resp);
     	}	
     }
     
