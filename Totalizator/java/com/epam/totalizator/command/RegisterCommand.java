@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import com.epam.totalizator.entity.User;
 import com.epam.totalizator.service.UserService;
 import com.epam.totalizator.servlet.SessionRequest;
-import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.Validator;
@@ -37,7 +36,7 @@ public class RegisterCommand extends AbstractCommand {
 			role = req.getParametr(PARAM_ROLE)[0];
 			UserService.Error err = UserService.register(login, password, email, role);
 			if(!err.equals(UserService.Error.NONE)) {
-				req.addAttribute(PARAM_MESSAGE, MessageManager.getMessage(err.getValue()));
+				req.setSessionAttribute(PARAM_MESSAGE, err.getValue());
 				page = PageManager.getPage("path.register");
 			}else {
 				password = Validator.passwordHasher(password);
