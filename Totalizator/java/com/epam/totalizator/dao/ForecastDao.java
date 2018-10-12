@@ -24,8 +24,15 @@ public class ForecastDao extends AbstractDao<Key<String, Integer>, Forecast> {
 			+ "from competition_m2m_user where user_login = ? and competition_id = ?";
 	private static final String SQL_SELECT_BY_LOGIN = "select user_login, competition_id, result\r\n"
 			+ "from competition_m2m_user where user_login = ?";
-	private static final String SQL_SELECT_BY_COMPETITION_ID = "select user_login, competition_id, result\r\n"
-			+ "from competition_m2m_user where competition_id = ?";
+	
+	private static final String SQL_SELECT_BY_COMPETITION_ID_WITH_NAMES = "select cu.competition_id, \r\n"
+			+ "case cu.result when '1' then l1.name when '2' then l2.name else cu.result end as result\r\n"
+			+ "from competition_m2m_user as cu inner join competition as c on cu.competition_id = c.id\r\n"
+			+ "									inner join language_has_sport_team as l1 on c.team1_id = l1.sport_team_id\r\n"
+			+ "									inner join language_has_sport_team as l2 on c.team2_id = l2.sport_team_id\r\n"
+			+ "where l1.language_id = ? and l2.language_id = ? and cu.competition_id = ?"
+			+ "order by cu.competition_id desc\r\n"
+			+ "limit 15";
 	
 	private static final String SQL_SELECT_BY_LOGIN_WITH_NAMES = "select cu.competition_id, \r\n"
 			+ "case cu.result when '1' then l1.name when '2' then l2.name else cu.result end as result\r\n"
@@ -149,19 +156,24 @@ public class ForecastDao extends AbstractDao<Key<String, Integer>, Forecast> {
 		return forecasts;
 	}
 	
-	public List<Forecast> findByCompetitionID(int id) throws ProjectException{
+	public List<Forecast> findByCompetitionID(int compId, String lang) throws ProjectException{
 		List<Forecast> forecasts = new ArrayList<>();
 		PreparedStatement stat = null;
 		ResultSet result = null;
 		try(Connection con = ConnectionPool.getInstance().takeConnection()){
-			stat = con.prepareStatement(SQL_SELECT_BY_COMPETITION_ID);
-			stat.setInt(1, id);
+			stat = con.prepareStatement(SQL_SELECT_BY_COMPETITION_ID_WITH_NAMES);
+			stat.setString(1, lang);
+			stat.setString(2, lang);
+			stat.setInt(3, compId);
 			result = stat.executeQuery();
 			while(result.next()) {
 				Forecast forecast = new Forecast();
-				forecast.setUserLogin(result.getString(LOGIN));
 				forecast.setCompetitionId(result.getInt(COMPETITION_ID));
-				forecast.setResult(result.getString(RESULT));
+				if(result.getString(RESULT).charAt(0) == 'x') {
+					forecast.setResultFull(MessageManager.getMessage("forecast.draw"));
+				}else {
+					forecast.setResultFull(result.getString(RESULT));
+				}
 				forecasts.add(forecast);
 			}
 		} catch(SQLException e) {
