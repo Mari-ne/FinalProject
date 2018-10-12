@@ -6,13 +6,13 @@ import javax.naming.directory.InvalidAttributesException;
 
 import org.apache.log4j.Logger;
 
-import com.epam.totalizator.servlet.SessionRequest;
+import com.epam.totalizator.servlet.SessionRequestContainer;
 
 public class CommandFactory {
 	
 	private static final Logger LOGGER = Logger.getRootLogger();
 	
-	public Optional<AbstractCommand> defineCommand(SessionRequest req){
+	public Optional<AbstractCommand> defineCommand(SessionRequestContainer req){
 		String command = null;
 		try {
 			command = req.getParametr("command")[0];

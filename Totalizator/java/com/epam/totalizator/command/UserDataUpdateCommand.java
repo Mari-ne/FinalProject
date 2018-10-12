@@ -10,8 +10,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.totalizator.entity.User;
 import com.epam.totalizator.service.UserService;
-import com.epam.totalizator.servlet.SessionRequest;
-import com.epam.totalizator.util.MessageManager;
+import com.epam.totalizator.servlet.SessionRequestContainer;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 
@@ -24,7 +23,7 @@ public class UserDataUpdateCommand extends AbstractCommand {
 	private static final String PARAM_CARD = "card";
 
 	@Override
-	public Optional<String> execute(SessionRequest req) throws ProjectException {
+	public Optional<String> execute(SessionRequestContainer req) throws ProjectException {
 		String page = null;
 		try {
 			User user = (User) req.getSessionAttribute(PARAM_USER);
@@ -41,7 +40,7 @@ public class UserDataUpdateCommand extends AbstractCommand {
 				err = UserService.userUpdate(user, email);
 			}
 			if(!err.equals(UserService.Error.NONE)) {
-				req.addAttribute(PARAM_MESSAGE, MessageManager.getMessage(err.getValue()));
+				req.setSessionAttribute(PARAM_MESSAGE, err.getValue());
 				page = PageManager.getPage("path.personalUpdate");
 			}else {
 				req.setSessionAttribute(PARAM_USER, user);

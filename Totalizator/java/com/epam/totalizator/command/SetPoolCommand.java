@@ -7,7 +7,7 @@ import javax.naming.directory.InvalidAttributesException;
 import org.apache.log4j.Logger;
 
 import com.epam.totalizator.service.ResultService;
-import com.epam.totalizator.servlet.SessionRequest;
+import com.epam.totalizator.servlet.SessionRequestContainer;
 import com.epam.totalizator.exception.ProjectException;
 
 public class SetPoolCommand extends AbstractCommand {
@@ -16,7 +16,7 @@ public class SetPoolCommand extends AbstractCommand {
 	private static final String PARAM_POOL = "pool";
 	
 	@Override
-	public Optional<String> execute(SessionRequest req) throws ProjectException {
+	public Optional<String> execute(SessionRequestContainer req) throws ProjectException {
 		String page = null;
 		try {
 			String[] parts = req.getParametr(PARAM_POOL);
