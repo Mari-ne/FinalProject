@@ -35,4 +35,8 @@ public class ResultService {
 			resDao.updatePoolPart(result.get(i));
 		}
 	}
+	
+	public static List<Result> getResult() throws ProjectException{
+		return resDao.findAll();
+	}
 }

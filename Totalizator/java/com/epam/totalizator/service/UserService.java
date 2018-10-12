@@ -151,4 +151,12 @@ public class UserService {
 		userDao.update(user);
 		return Error.NONE;
 	}
+	
+	public static List<User> getUsers() throws ProjectException{
+		return userDao.findByRole("User");
+	}
+	
+	public static final List<User> getBookmakers() throws ProjectException{
+		return userDao.findByRole("Bookmaker");
+	}
 }
