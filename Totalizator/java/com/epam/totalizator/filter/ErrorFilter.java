@@ -1,7 +1,6 @@
 package com.epam.totalizator.filter;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
@@ -12,33 +11,26 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
-
-import com.epam.totalizator.entity.Competition;
-import com.epam.totalizator.service.CompetitionService;
-import com.epam.totalizator.util.PageManager;
-import com.epam.totalizator.exception.ProjectException;
+import com.epam.totalizator.util.MessageManager;
 
 /**
- * Servlet Filter implementation class MainPageFillter
+ * Servlet Filter implementation class ErrorFilter
  */
-@WebFilter(urlPatterns = { "/jsp/main.jsp" },
+@WebFilter(urlPatterns = { "/jsp/*"},
 dispatcherTypes = {
 		DispatcherType.FORWARD,
 		DispatcherType.REQUEST
 })
-public class MainPageFillter implements Filter {
+public class ErrorFilter implements Filter {
 
-	private static final Logger LOGGER= Logger.getRootLogger();
-	private static final String PARAM_LANG = "lang";
-	private static final String PARAM_LIST = "list"; 
+	private static final String PARAM_MESSAGE = "message";
+	private static final String PARAM_ERROR = "error";
 	
     /**
      * Default constructor. 
      */
-    public MainPageFillter() {}
+    public ErrorFilter() { }
 
 	/**
 	 * @see Filter#destroy()
@@ -50,14 +42,16 @@ public class MainPageFillter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		HttpServletResponse resp = (HttpServletResponse) response;
-		try {
-			List<Competition> competitions = CompetitionService.constructMainTable((String)req.getSession().getAttribute(PARAM_LANG));
-			request.setAttribute(PARAM_LIST, competitions);
-		} catch (ProjectException e) {
-			LOGGER.error(e);
-			resp.sendRedirect(req.getContextPath() + PageManager.getPage("path.error"));
-		}		
+		String param = (String)req.getSession().getAttribute(PARAM_MESSAGE);
+		if(param != null) {
+			req.setAttribute(PARAM_MESSAGE, MessageManager.getMessage(param));
+			req.getSession().removeAttribute(PARAM_MESSAGE);
+		}
+		param = (String)req.getSession().getAttribute(PARAM_ERROR);
+		if(param != null) {
+			req.setAttribute(PARAM_MESSAGE, param);
+			req.getSession().removeAttribute(PARAM_ERROR);
+		}
 		chain.doFilter(request, response);
 	}
 

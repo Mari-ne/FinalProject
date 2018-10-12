@@ -19,6 +19,7 @@ import org.apache.log4j.Logger;
 import com.epam.totalizator.entity.Competition;
 import com.epam.totalizator.entity.User;
 import com.epam.totalizator.service.CompetitionService;
+import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.ServiceThread;
@@ -59,12 +60,12 @@ public class MakeBetPageFilter implements Filter {
 			if(user.getCards() != null) {
 				List<Competition> comp = CompetitionService.getBettable((String)req.getSession().getAttribute(PARAM_LANG));
 				if(comp.isEmpty() || comp.size() != ServiceThread.number.get()) {
-					throw new ProjectException("You can't make bet util moment, when Administrator create 15 competition");
+					throw new ProjectException(MessageManager.getMessage("exc.makeBet.competition"));
 				}else {
 					request.setAttribute(PARAM_LIST, comp);				
 				}
 			} else {
-				throw new ProjectException("You can't make bet until you add card");
+				throw new ProjectException(MessageManager.getMessage("exc.makeBet.card"));
 			}
 		} catch (ProjectException e) {
 			LOGGER.error(e);

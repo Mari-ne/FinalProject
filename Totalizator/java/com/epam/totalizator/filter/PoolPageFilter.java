@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.epam.totalizator.dao.ResultDao;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
+import com.epam.totalizator.service.ResultService;
 
 /**
  * Servlet Filter implementation class PoolPageFilter
@@ -49,8 +49,7 @@ public class PoolPageFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		try {
-			ResultDao dao = new ResultDao();
-			request.setAttribute(PARAM_LIST, dao.findAll());
+			request.setAttribute(PARAM_LIST, ResultService.getResult());
 		} catch (ProjectException e) {
 			LOGGER.error(e);
 			resp.sendRedirect(req.getContextPath() + PageManager.getPage("path.error"));

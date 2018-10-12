@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import com.epam.totalizator.dao.UserDao;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
+import com.epam.totalizator.service.UserService;
 
 /**
  * Servlet Filter implementation class UserPageFilter
@@ -50,9 +50,8 @@ public class UserPageFilter implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		try {
-			UserDao dao = new UserDao();
-			request.setAttribute(PARAM_USERS, dao.findByRole("User"));
-			request.setAttribute(PARAM_USERS, dao.findByRole("Bookmaker"));
+			request.setAttribute(PARAM_USERS, UserService.getUsers());
+			request.setAttribute(PARAM_BOOKAMAKERS, UserService.getBookmakers());
 		} catch (ProjectException e) {
 			LOGGER.error(e);
 			resp.sendRedirect(req.getContextPath() + PageManager.getPage("path.error"));
