@@ -51,9 +51,10 @@
   	</div>
 	<c:import url="..\WEB-INF\jspf\sidenav.jsp" />
 	<div class = "content">
-		<img alt="" src="${pageContext.request.contextPath}/assets/image/error-image.png">
-		<br>
 		<div>${message}</div>
+		<div>${pageContext.exception.message}</div>
+		<br>
+		<img alt="" src="${pageContext.request.contextPath}/assets/image/error-image.png">
     </div>
 </body>
 </html>
