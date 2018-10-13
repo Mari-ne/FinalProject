@@ -13,6 +13,10 @@ import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.Validator;
 
+/**
+ * Class-command to register a new user.
+ *
+ */
 public class RegisterCommand extends AbstractCommand {
 	
 	private static final String PARAM_LOGIN = "login";

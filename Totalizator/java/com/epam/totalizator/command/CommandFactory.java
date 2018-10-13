@@ -8,6 +8,9 @@ import org.apache.log4j.Logger;
 
 import com.epam.totalizator.servlet.SessionRequestContainer;
 
+/**
+ * Class to create necessary command.
+ */
 public class CommandFactory {
 	
 	private static final Logger LOGGER = Logger.getRootLogger();

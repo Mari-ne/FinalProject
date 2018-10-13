@@ -2,6 +2,10 @@ package com.epam.totalizator.pool.db;
 
 import java.util.ResourceBundle;
 
+/**
+ * Service class, that manage database parameters
+ *
+ */
 public class DbResourceManager {
 
 	private final static DbResourceManager instance = new DbResourceManager();

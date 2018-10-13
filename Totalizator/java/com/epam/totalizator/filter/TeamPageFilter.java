@@ -46,6 +46,7 @@ public class TeamPageFilter implements Filter {
 	public void destroy() {}
 
 	/**
+	 * Add to request data about teams.
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

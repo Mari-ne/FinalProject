@@ -350,7 +350,7 @@ public class CompetitionDao extends AbstractDao<Integer, Competition> {
 				comp.setFinish(result.getTimestamp(FINISH));
 				comp.setState(result.getString(STATE));
 				switch(comp.getState()) {
-					case "Acceptence of bets":{
+					case "Acceptance of bets":{
 						comp.setState(MessageManager.getMessage("competition.state.accept"));
 						break;
 					}

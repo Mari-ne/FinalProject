@@ -1,5 +1,10 @@
 package com.epam.totalizator.entity;
 
+/**
+ * Sport team class.
+ *		Hold data about team id and name, sport id and name,
+ *		quantity of wins and loses.
+ */
 public class SportTeam extends Entity {
 	
 	private int id;

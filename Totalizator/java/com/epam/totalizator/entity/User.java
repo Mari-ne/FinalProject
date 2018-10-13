@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * User class.
+ * 		Hold data about user login, password,
+ * 		role, email and cards number (if role = 'User').
+ *
+ */
 public class User extends Entity {
 
 	private String login;

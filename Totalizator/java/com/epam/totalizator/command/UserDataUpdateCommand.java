@@ -14,6 +14,11 @@ import com.epam.totalizator.servlet.SessionRequestContainer;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 
+/**
+ * Class-command to process command of user data update.
+ * 		Update email and cards (if user's role 'User').
+ *
+ */
 public class UserDataUpdateCommand extends AbstractCommand {
 	
 	private static final Logger LOGGER = Logger.getRootLogger();

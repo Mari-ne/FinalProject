@@ -10,6 +10,11 @@ import com.epam.totalizator.entity.Forecast;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.ServiceThread;
 
+/**
+ * Class of logic layer of application.
+ * 
+ * Process all logic connected with information about competitions.
+ */
 public class CompetitionService {
 
 	private static CompetitionDao compDao = new CompetitionDao();

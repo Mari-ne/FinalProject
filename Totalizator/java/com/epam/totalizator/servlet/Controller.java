@@ -18,6 +18,10 @@ import com.epam.totalizator.pool.ConnectionPool;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 
+/**
+ * Class-controller. Work with all requests (urlPatterns = '/').
+ *
+ */
 @WebServlet(urlPatterns = {"/"})
 public class Controller extends HttpServlet {
 	
@@ -59,6 +63,9 @@ public class Controller extends HttpServlet {
     	}	
     }
     
+    /**
+     * Close pool of connections.
+     */
     @Override
     public void destroy() {
     	try {

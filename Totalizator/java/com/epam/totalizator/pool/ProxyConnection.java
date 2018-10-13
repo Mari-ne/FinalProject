@@ -22,6 +22,10 @@ import java.util.concurrent.Executor;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Connection with database class.
+ *
+ */
 class ProxyConnection implements Connection, AutoCloseable {
 
 	private Connection connection;
@@ -30,6 +34,7 @@ class ProxyConnection implements Connection, AutoCloseable {
 	
 	ProxyConnection(Connection connection) {
 		this.connection = connection;
+		LOGGER.debug("Connection was oppend");
 	}
 	
 	@Override
@@ -45,6 +50,7 @@ class ProxyConnection implements Connection, AutoCloseable {
 	
 	public void realyClose() throws SQLException {
 		connection.close();
+		LOGGER.debug("Connection was closed");
 	}
 	
 	@Override

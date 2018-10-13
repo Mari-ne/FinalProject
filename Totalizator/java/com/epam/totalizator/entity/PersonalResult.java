@@ -2,6 +2,11 @@ package com.epam.totalizator.entity;
 
 import java.math.BigDecimal;
 
+/**
+ * Personal result class.
+ *		Hold data about login, last bet, last gain,
+ *		all bets and all gains of this user.
+ */
 public class PersonalResult extends Entity {
 
 	private String userLogin;

@@ -14,6 +14,9 @@ import com.epam.totalizator.entity.TeamVs;
 import com.epam.totalizator.pool.ConnectionPool;
 import com.epam.totalizator.exception.ProjectException;
 
+/**
+ * Dao class to work with 'team_vs' table from database.
+ */
 public class TeamVSDao extends AbstractDao<Key<Integer, Integer>, TeamVs> {
 
 	private static final String SQL_SELECT_ALL_TEAM_VS = "select team1_id, team2_id, team1_wins, team2_wins, quantity\r\n"

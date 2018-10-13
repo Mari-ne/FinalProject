@@ -12,6 +12,10 @@ import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 
+/**
+ * Class command to change language of representation.
+ *
+ */
 public class LanguageCommand extends AbstractCommand {
 
 	private static final Logger LOGGER = Logger.getRootLogger();

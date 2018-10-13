@@ -1,5 +1,10 @@
 package com.epam.totalizator.entity;
 
+/**
+ * Forecast class.
+ *		Hold data about who made forecast, on what competition and what
+ *		result is he predicting (1 - first team win; 2 - second team win; or x - draw).
+ */
 public class Forecast extends Entity {
 
 	private String userLogin;

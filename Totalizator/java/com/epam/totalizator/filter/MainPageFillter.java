@@ -46,6 +46,7 @@ public class MainPageFillter implements Filter {
 	public void destroy() {}
 
 	/**
+	 * Add to request data about competitions.
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

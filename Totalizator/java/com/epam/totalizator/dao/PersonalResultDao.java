@@ -15,6 +15,10 @@ import com.epam.totalizator.entity.PersonalResult;
 import com.epam.totalizator.pool.ConnectionPool;
 import com.epam.totalizator.exception.ProjectException;
 
+/**
+ * Dao class to work with 'personal_result' table from databse.
+ *
+ */
 public class PersonalResultDao extends AbstractDao<String, PersonalResult> {
 
 	private static final String SQL_SELECT_ALL_PERSONAL_RESULT = "select user_login, last_bet, last_gain, all_bet, all_gain\r\n"

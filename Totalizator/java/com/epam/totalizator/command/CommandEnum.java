@@ -1,5 +1,9 @@
 package com.epam.totalizator.command;
 
+/**
+ * Enum, from where necessary command is chose.
+ *
+ */
 public enum CommandEnum {
 	LOGIN(new LoginCommand()),
 	LOGOUT(new LogOutCommand()),

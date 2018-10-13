@@ -10,6 +10,11 @@ import com.epam.totalizator.entity.SportTeam;
 import com.epam.totalizator.entity.TeamVs;
 import com.epam.totalizator.exception.ProjectException;
 
+/**
+ * Class of logic layer of application.
+ * 
+ * Process all logic connected with information about teams.
+ */
 public class TeamService {
 	
 	private static TeamVSDao vsDao = new TeamVSDao();

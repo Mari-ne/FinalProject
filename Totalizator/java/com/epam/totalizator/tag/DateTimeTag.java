@@ -9,7 +9,12 @@ import java.text.SimpleDateFormat;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+/**
+ * Class of custom tag, that show date and time with pattern.
+ */
 public class DateTimeTag extends TagSupport {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String timePattern;
 	private String datePattern;

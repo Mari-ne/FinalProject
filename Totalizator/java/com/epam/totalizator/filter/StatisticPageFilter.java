@@ -46,6 +46,7 @@ public class StatisticPageFilter implements Filter {
 	public void destroy() {}
 
 	/**
+	 * Add to request data about matches statistic.
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

@@ -38,6 +38,7 @@ public class ErrorFilter implements Filter {
 	public void destroy() {}
 
 	/**
+	 * Add error message to request.
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

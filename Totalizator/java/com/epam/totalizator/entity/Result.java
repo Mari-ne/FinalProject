@@ -2,6 +2,14 @@ package com.epam.totalizator.entity;
 
 import java.math.BigDecimal;
 
+/**
+ * Result class.
+ * 		Hold data about quantity of correct forecasts; quantity of betters,
+ * 		that made this quantity of correct forecasts; sum of their bets;
+ * 		part of all pool (in percents and in money), that will be divided between this betters
+ * 		and coefficient, on which will be multiplied betters bet. 
+ *
+ */
 public class Result extends Entity {
 
 	private int correct;

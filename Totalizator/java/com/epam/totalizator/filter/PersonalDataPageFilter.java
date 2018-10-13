@@ -47,6 +47,7 @@ public class PersonalDataPageFilter implements Filter {
 	public void destroy() {}
 
 	/**
+	 * Add to requests personal data and last forecasts of user.
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

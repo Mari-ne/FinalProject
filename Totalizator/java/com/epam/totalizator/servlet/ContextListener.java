@@ -12,7 +12,6 @@ import com.epam.totalizator.util.ServiceThread;
 
 /**
  * Application Lifecycle Listener implementation class ContextListener
- *
  */
 public class ContextListener implements ServletContextListener {
 
@@ -29,6 +28,7 @@ public class ContextListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent sce)  {}
 
 	/**
+	 * Start daemon thread {@linkplain ServiceThread}
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent sce)  { 

@@ -15,6 +15,10 @@ import com.epam.totalizator.pool.ConnectionPool;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.entity.Result;
 
+/**
+ * Dao class to work with 'result' table from database.
+ *
+ */
 public class ResultDao extends AbstractDao<Integer, Result> {
 
 	private static final String SQL_SELECT_ALL = "select correct, betters, bets, pool_part, pool, coefficient\r\n"

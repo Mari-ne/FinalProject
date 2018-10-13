@@ -5,6 +5,12 @@ import java.util.List;
 import com.epam.totalizator.entity.PersonalResult;
 import com.epam.totalizator.entity.Result;
 
+/**
+ * Service class, that find index of element in lists. 
+ * Depending on list content, require different unique parameter
+ * with what it compare.
+ * All methods return -1, if element wasn't found
+ */
 public class Finder {
 
 	public static int findPersonalResult(String login, List<PersonalResult> perResults) {

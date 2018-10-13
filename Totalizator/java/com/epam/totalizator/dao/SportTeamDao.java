@@ -16,6 +16,9 @@ import com.epam.totalizator.entity.SportTeam;
 import com.epam.totalizator.pool.ConnectionPool;
 import com.epam.totalizator.exception.ProjectException;
 
+/**
+ * Dao class to work with 'sport_team' table from database.
+ */
 public class SportTeamDao extends AbstractDao<Integer, SportTeam> {
 
 	private static final String SQL_SELECT_ALL_TEAM = "select id, sport_id, wins, loses\r\n"

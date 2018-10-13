@@ -1,5 +1,12 @@
 package com.epam.totalizator.entity;
 
+/**
+ * Team vs team class.
+ * 		Hold data about 2 teams id's and names,
+ * 		quantity of first and second team wins and
+ * 		quantity of matches between them.
+ *
+ */
 public class TeamVs extends Entity{
 
 	private int team1Id;

@@ -1,8 +1,13 @@
 package com.epam.totalizator.entity;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
+/**
+ * Competition class.
+ * 		Hold data about competition id, id and name of sport, 
+ * 		id and name of both participants, current state of competition,
+ * 		date and time of start and finish and result.
+ */
 public class Competition extends Entity {
 
 	private int id;

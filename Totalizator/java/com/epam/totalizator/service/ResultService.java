@@ -7,6 +7,11 @@ import com.epam.totalizator.dao.ResultDao;
 import com.epam.totalizator.entity.Result;
 import com.epam.totalizator.exception.ProjectException;
 
+/**
+ * Class of logic layer of application.
+ * 
+ * Process all logic connected with result of bets.
+ */
 public class ResultService {
 
 	private static ResultDao resDao = new ResultDao();

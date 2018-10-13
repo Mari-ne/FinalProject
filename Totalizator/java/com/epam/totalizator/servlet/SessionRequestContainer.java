@@ -7,6 +7,11 @@ import java.util.Map;
 import javax.naming.directory.InvalidAttributesException;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * Class-container. Contains Http request's parameter, attributes
+ * and attributes of opened session.
+ *
+ */
 public class SessionRequestContainer {
 
 	private HashMap<String, String[]> parametrs;

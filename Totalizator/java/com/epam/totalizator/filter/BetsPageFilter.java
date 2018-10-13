@@ -49,6 +49,7 @@ public class BetsPageFilter implements Filter {
 	public void destroy() {}
 
 	/**
+	 * Add to request data about user's bets on now 'bettable' competition.
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

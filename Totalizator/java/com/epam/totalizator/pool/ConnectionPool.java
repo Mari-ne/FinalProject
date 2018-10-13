@@ -16,6 +16,12 @@ import com.epam.totalizator.exception.ProjectException;
 
 import org.apache.log4j.Logger;
 
+/**
+ * Pool of connections class.
+ * 		Firstly, open 3 connection.
+ * 		If there is a need in more connection they will be created (to 10 connection).
+ * 		
+ */
 public class ConnectionPool {
 	
 	private static ConnectionPool instance;
@@ -27,8 +33,7 @@ public class ConnectionPool {
 	private int maxPoolSize = 10;
 	private int minPoolSize = 3;
 		
-	private AtomicInteger counter = new AtomicInteger(0);
-	//private static int counter; //count, how many connections is busy right now
+	public AtomicInteger counter = new AtomicInteger(0); //count, how many connections is busy right now
 
 	private static final ReentrantLock lock = new ReentrantLock();	
 	private static final Logger LOGGER = Logger.getRootLogger();

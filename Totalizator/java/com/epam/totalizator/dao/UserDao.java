@@ -14,6 +14,10 @@ import com.epam.totalizator.entity.User;
 import com.epam.totalizator.pool.ConnectionPool;
 import com.epam.totalizator.exception.ProjectException;
 
+/**
+ * Dao class to work with 'user' table from database.
+ *
+ */
 public class UserDao extends AbstractDao<String, User> {
 
 	private static final String SQL_SELECT_ALL_USER = "select login, password, `e-mail`, role\r\n"

@@ -26,7 +26,19 @@ import com.epam.totalizator.entity.Result;
 import com.epam.totalizator.entity.User;
 import com.epam.totalizator.exception.ProjectException;
 
-
+/**
+ * 
+ * Service class, that work as daemon thread.
+ * It monitors competition and their state.
+ * If competition with state 'Acceptance of bet' is starting now, all competition with the same state change
+ * it on state 'Completion of bets'.
+ * After that, thread wait till the finish of each competition, randomly generate result and set state 'Completed'.
+ * Next, it find all user and their forecasts on this list of competition and count quantity of correct predictions.
+ * If this quantity is less then 8, user get regrettable email. Otherwise, program count how much this user get
+ * and send congratulatory email.
+ * After that, thread return to monitoring.
+ *
+ */
 public class ServiceThread extends Thread {
 
 	private PersonalResultDao personDao = new PersonalResultDao();
@@ -34,12 +46,17 @@ public class ServiceThread extends Thread {
 	private UserDao userDao = new UserDao();
 	private CompetitionDao dao = new CompetitionDao();
 	private ForecastDao forecastDao = new ForecastDao();
-	
 	public static final AtomicInteger number = new AtomicInteger(15);
 	private static final Logger LOGGER = Logger.getRootLogger();
 	
 	private static AtomicInteger count = new AtomicInteger(0);
 	
+	/**
+	 * Method to monitor competitions.
+	 * 		Find all 'bettable' (that has state 'Acceptance of bets') competition.
+	 * 		If some of them is started, method waiting() is launching.
+	 * 		Otherwise, thread sleep 10 seconds.
+	 */
 	@Override
 	public void run() {
 		LOGGER.debug("start work!");
@@ -71,6 +88,11 @@ public class ServiceThread extends Thread {
         }
     }
 	
+	/**
+	 * Method, that 'complete' all competition (set them result and set state 'Completed').
+	 * 		If all competition end, method launch method processing().
+	 * 		Otherwise, sleep 1 second.
+	 */	
 	private void waiting() {
 		try {
 			List<Forecast> forecasts = forecastDao.findActualForecast();
@@ -107,6 +129,17 @@ public class ServiceThread extends Thread {
 		
 	}
 	
+	/**
+	 * Method to process result of users bets.
+	 * 		Firstly, found quantity of correct predictions for each user (method {@linkplain ServiceThread#countCorrect})
+	 * 		Than, depend on this information deside, who will get nothing (they will get email with regrets) and
+	 * 		who will get profit (their bets is added to appropriate row in database).
+	 * 		Next step: count coefficient for each quantity of correct predictions on base of users bets.
+	 * 		Last step: count gain of each winner and notify them with email.
+	 * @param completed List of completed competitions
+	 * @param forecasts List of all forecast, that made to completed competitions
+	 * @param correct Map of login and integer
+	 */
 	private void resultProcessing(List<Competition> completed, List<Forecast> forecasts, HashMap<String, Integer> correct) {
 		try {
 			List<PersonalResult> perResult = personDao.findAll();
@@ -151,6 +184,11 @@ public class ServiceThread extends Thread {
 		}
 	}
 	
+	/**
+	 * Generate random result for competition.
+	 * @param sportId Type of sport of competition for what result is generated 
+	 * @return Generated result of competition: 'first team score':'second team score'
+	 */
 	private String makeResult(int sportId) {
 		String result = "";
 		Random rand = new Random();
@@ -171,7 +209,16 @@ public class ServiceThread extends Thread {
 		return result;
 	}
 	
-	private void countCorrect(List<Competition> completed, List<Forecast> forecasts, HashMap<String, Integer> correct) {
+	/**
+	 * Count quantity of correct prediction for each competition and user. 
+	 * 		Count quantity of correct prediction on base of competition result and user's prediction.
+	 * 		Result is saved in correct
+	 * @param completed List of completed competition
+	 * @param forecasts List of users forecasts
+	 * @param correct Map of logins and integers
+	 */
+	static void countCorrect(List<Competition> completed, List<Forecast> forecasts, HashMap<String, Integer> correct) {
+		//method was made package to have access in test
 		for(Competition comp : completed) {
 			String res = comp.getResult();
 			int first = Integer.parseInt(res.substring(0, res.indexOf(":")));
@@ -190,6 +237,12 @@ public class ServiceThread extends Thread {
 		}
 	}
 	
+	/**
+	 * Generate and send email to users.
+	 * @param isWinMessage Show, what type of email to send
+	 * @param gain Amount of gain
+	 * @param user User to whom email will be send
+	 */
 	private void sendResults(boolean isWinMessage, BigDecimal gain, User user) {
 		Mailer mailer = new Mailer();
 		String subject = "";

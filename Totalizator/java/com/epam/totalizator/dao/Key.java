@@ -1,5 +1,11 @@
 package com.epam.totalizator.dao;
 
+/**
+ * Class to work with tables, that have composite primary key.
+ *
+ * @param <K1> First field from primary key
+ * @param <K2> Second field from primary key
+ */
 public class Key <K1, K2>{
 
 	private K1 key1;

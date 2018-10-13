@@ -10,6 +10,10 @@ import com.epam.totalizator.service.ResultService;
 import com.epam.totalizator.servlet.SessionRequestContainer;
 import com.epam.totalizator.exception.ProjectException;
 
+/**
+ * Class-command to update pool.
+ * 		Called if bookmaker changed pool parts for priza pool.
+ */
 public class SetPoolCommand extends AbstractCommand {
 
 	private static final Logger LOGGER = Logger.getRootLogger();

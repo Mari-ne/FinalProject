@@ -14,8 +14,19 @@ import com.epam.totalizator.entity.User;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.Validator;
 
+/**
+ * Class of logic layer of application.
+ * 
+ * Process all logic connected with user and his activity.
+ *
+ */
 public class UserService {
 
+	/**
+	 * Enum of errors, that might appear while registration, user data update
+	 * and change of password.
+	 *
+	 */
 	public static enum Error{
 		USED_LOGIN("error.login.used"),
 		INCORRECT_PASSWORD("error.password.invalid"),

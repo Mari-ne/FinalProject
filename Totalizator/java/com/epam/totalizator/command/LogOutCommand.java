@@ -5,6 +5,10 @@ import java.util.Optional;
 import com.epam.totalizator.servlet.SessionRequestContainer;
 import com.epam.totalizator.util.PageManager;
 
+/**
+ * Class-command to log out from account.
+ *
+ */
 public class LogOutCommand extends AbstractCommand {
 
 	@Override

@@ -18,8 +18,11 @@ import org.apache.log4j.Logger;
 
 import com.epam.totalizator.entity.Sport;
 import com.epam.totalizator.entity.SportTeam;
+import com.epam.totalizator.service.CompetitionService;
 import com.epam.totalizator.service.TeamService;
+import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.util.PageManager;
+import com.epam.totalizator.util.ServiceThread;
 import com.epam.totalizator.exception.ProjectException;
 
 /**
@@ -47,12 +50,16 @@ public class AddCompetitionPageFilter implements Filter {
 	public void destroy() {}
 
 	/**
+	 * Add to request data about teams and sports to choose from.
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
 		try {
+			if(CompetitionService.getBettable("ru").size() == ServiceThread.number.get()) {
+				throw new ProjectException(MessageManager.getMessage("exc.addCompetition.enough"));
+			}
 			List<SportTeam> teams = TeamService.getTeams((String)req.getSession().getAttribute(PARAM_LANG));
 			List<Sport> sport = TeamService.getSports((String)req.getSession().getAttribute(PARAM_LANG));
 			request.setAttribute(PARAM_TEAMS, teams);

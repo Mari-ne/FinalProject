@@ -11,6 +11,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+/**
+ * Service class, that send email's {@linkplain Mailer#send(String, String, String)}
+ * from defined email {@linkplain Mailer#userName}.
+ * Hold email and password of this defined user and configuration.
+ */
 public class Mailer {
 	
 	private String userName;

@@ -16,6 +16,10 @@ import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.entity.Forecast;
 
+/**
+ * Dao class to work with 'forecast' table from database.
+ *
+ */
 public class ForecastDao extends AbstractDao<Key<String, Integer>, Forecast> {
 
 	private static final String SQL_SELECT_ALL = "select user_login, competition_id, result\r\n"

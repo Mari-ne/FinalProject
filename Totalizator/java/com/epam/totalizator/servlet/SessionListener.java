@@ -22,6 +22,8 @@ public class SessionListener implements HttpSessionListener {
     public SessionListener() {}
 
 	/**
+	 * Set start session attributes.
+	 * 		Set: language - English; user - null.
      * @see HttpSessionListener#sessionCreated(HttpSessionEvent)
      */
     public void sessionCreated(HttpSessionEvent se)  { 
@@ -31,6 +33,7 @@ public class SessionListener implements HttpSessionListener {
     }
 
 	/**
+	 * Remove session attributes.
      * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
      */
     public void sessionDestroyed(HttpSessionEvent se)  { 

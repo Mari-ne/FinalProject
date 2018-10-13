@@ -46,6 +46,7 @@ public class AddTeamPageFilter implements Filter {
 	public void destroy() {}
 
 	/**
+	 * Add to request data about sports to choose from.
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {

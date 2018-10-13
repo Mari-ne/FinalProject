@@ -13,6 +13,10 @@ import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.Validator;
 
+/**
+ * Class-command to authorize in system.
+ *
+ */
 public class LoginCommand extends AbstractCommand {
 
 	private static final String PARAM_LOGIN = "login";

@@ -36,7 +36,6 @@ public class StartPageRedirectFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
-		// переход на заданную страницу
 		httpResponse.sendRedirect(httpRequest.getContextPath() + indexPath);
 		chain.doFilter(request, response);
 	}

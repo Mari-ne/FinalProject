@@ -50,6 +50,8 @@ public class MakeBetPageFilter implements Filter {
 	public void destroy() {}
 
 	/**
+	 * Add to request data about 'bettable' competitions. 
+	 * 		If user hasn't registered cards or there is not enough amount of competitions, he will be redirect to error page.
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
