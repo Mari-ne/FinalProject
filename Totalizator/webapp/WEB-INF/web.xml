@@ -4,6 +4,10 @@
     <servlet-name>Controller</servlet-name>
     <servlet-class>com.epam.totalizator.servlet.Controller</servlet-class>
   </servlet>
+  <error-page>
+   <exception-type>com.epam.totalizator.ecxeption.ProgectEcxeption</exception-type>
+   <location>/jsp/error.jsp</location>
+   </error-page>
   <filter>
     <display-name>EncodingFilter</display-name>
     <filter-name>EncodingFilter</filter-name>
