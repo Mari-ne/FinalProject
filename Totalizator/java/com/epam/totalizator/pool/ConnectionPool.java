@@ -89,7 +89,6 @@ public class ConnectionPool {
 		try{
 			lock.lock();
 			con = connections.poll();
-			//con == null if queue is empty
 			if(con == null && counter.get() < maxPoolSize) {
 				try {
 					con = new ProxyConnection(DriverManager.getConnection(url, user, password));
