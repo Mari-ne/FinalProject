@@ -7,29 +7,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
-	    <%@include file="../../assets/css/body.css"%>
-	    <%@include file="../../assets/css/button.css"%>
-	    <%@include file="../../assets/css/input.css"%>	    
-	    <%@include file="../../assets/css/table.css"%>
-	    <%@include file="../../assets/css/link.css"%>
-	    <%@include file="../../assets/css/icon.css"%>
-	</style>
+	<link rel="stylesheet" href="/assets/css/body.css">
+	<link rel="stylesheet" href="/assets/css/button.css">
+	<link rel="stylesheet" href="/assets/css/input.css">	    
+	<link rel="stylesheet" href="/assets/css/table.css">
+	<link rel="stylesheet" href="/assets/css/link.css">
+	<link rel="stylesheet" href="/assets/css/icon.css">
 	<c:choose>
 		<c:when test="${sessionScope.lang == 'en'}">
-			<style>
-				<%@include file="../../assets/css/enLang.css"%>
-			</style>
+			<link rel="stylesheet" href="/assets/css/enLang.css">
 		</c:when>
 		<c:when test="${sessionScope.lang == 'jp'}">
-			<style>
-				<%@include file="../../assets/css/jpLang.css"%>
-			</style>
+			<link rel="stylesheet" href="/assets/css/jpLang.css">
 		</c:when>
 		<c:otherwise>
-			<style>
-				<%@include file="../../assets/css/ruLang.css"%>
-			</style>		
+			<link rel="stylesheet" href="/assets/css/ruLang.css">
 		</c:otherwise>
 	</c:choose>
 	<title>Error</title>
@@ -41,7 +33,7 @@
 				<c:import url="..\WEB-INF\jspf\authorize.jsp" />
 			</c:when>
 			<c:otherwise>
-				<c:import url="..\WEB-INF\jspf\upper_en_EN.jsp" />
+				<c:import url="..\WEB-INF\jspf\upper.jsp" />
 			</c:otherwise>
 		</c:choose>
 		<form action = "Controller" method = "get">
@@ -51,10 +43,9 @@
   	</div>
 	<c:import url="..\WEB-INF\jspf\sidenav.jsp" />
 	<div class = "content">
-		<div>${message}</div>
-		<div>${pageContext.exception.message}</div>
-		<br>
-		<img alt="" src="${pageContext.request.contextPath}/assets/image/error-image.png">
+		<div style="font-size:20px">${message}</div>
+		<div style="font-size:20px">${pageContext.exception.message}</div>
+		<img alt="" src="/assets/image/error-image.png">
     </div>
 </body>
 </html>

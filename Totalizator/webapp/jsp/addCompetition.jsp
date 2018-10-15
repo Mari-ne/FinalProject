@@ -9,29 +9,21 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<style>
-	    <%@include file="../assets/css/body.css"%>
-	    <%@include file="../assets/css/button.css"%>
-	    <%@include file="../assets/css/input.css"%>	    
-	    <%@include file="../assets/css/table.css"%>
-	    <%@include file="../assets/css/link.css"%>
-	    <%@include file="../assets/css/icon.css"%>
-	</style>
+	<link rel="stylesheet" href="/assets/css/body.css">
+	<link rel="stylesheet" href="/assets/css/button.css">
+	<link rel="stylesheet" href="/assets/css/input.css">	    
+	<link rel="stylesheet" href="/assets/css/table.css">
+	<link rel="stylesheet" href="/assets/css/link.css">
+	<link rel="stylesheet" href="/assets/css/icon.css">
 	<c:choose>
 		<c:when test="${sessionScope.lang == 'en'}">
-			<style>
-				<%@include file="../assets/css/enLang.css"%>
-			</style>
+			<link rel="stylesheet" href="/assets/css/enLang.css">
 		</c:when>
 		<c:when test="${sessionScope.lang == 'jp'}">
-			<style>
-				<%@include file="../assets/css/jpLang.css"%>
-			</style>
+			<link rel="stylesheet" href="/assets/css/jpLang.css">
 		</c:when>
 		<c:otherwise>
-			<style>
-				<%@include file="../assets/css/ruLang.css"%>
-			</style>		
+			<link rel="stylesheet" href="/assets/css/ruLang.css">
 		</c:otherwise>
 	</c:choose>
 	<title><fmt:message key="add.title" bundle="${rb}" /></title>
@@ -97,7 +89,5 @@
 		</c:forEach>
 	</div>
 </body>
-	<script>
-		<%@include file="../assets/js/addCompetition.js"%>
-	</script>
+	<script src="/assets/js/addCompetition.js"></script>
 </html>
