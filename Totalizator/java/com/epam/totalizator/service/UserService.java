@@ -12,6 +12,7 @@ import com.epam.totalizator.entity.Forecast;
 import com.epam.totalizator.entity.PersonalResult;
 import com.epam.totalizator.entity.User;
 import com.epam.totalizator.exception.ProjectException;
+import com.epam.totalizator.util.Hasher;
 import com.epam.totalizator.util.Validator;
 
 /**
@@ -72,7 +73,7 @@ public class UserService {
 		if(userDao.findById(login).isPresent()) {
 			result = Error.USED_LOGIN;
 		} else {
-			password = Validator.passwordHasher(password);
+			password = Hasher.passwordHasher(password);
 			User user = new User(login, password, email, role, null);
 			if(userDao.create(user)) {
 				result = Error.NONE;
@@ -150,14 +151,14 @@ public class UserService {
 	}
 	
 	public static Error passwordChange(User user, String oldPass, String newPass) throws ProjectException{
-		String hash = Validator.passwordHasher(oldPass);
+		String hash = Hasher.passwordHasher(oldPass);
 		if(!hash.equals(user.getPassword())) {
 			return Error.OTHER_PASSWORD;
 		}
 		if(!Validator.isAcceptablePassword(newPass)) {
 			return Error.INCORRECT_PASSWORD;
 		}
-		hash = Validator.passwordHasher(newPass);
+		hash = Hasher.passwordHasher(newPass);
 		user.setPassword(hash);
 		userDao.update(user);
 		return Error.NONE;
