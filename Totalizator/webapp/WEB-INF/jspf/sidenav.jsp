@@ -7,9 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style type="text/css">
-		<%@include file="../../assets/css/sideNav.css"%>
-	</style>
+	<link rel="stylesheet" href="/assets/css/sideNav.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
