@@ -39,6 +39,7 @@ public class AddCompetitionPageFilter implements Filter {
 	private static final String PARAM_LANG = "lang";
 	private static final String PARAM_TEAMS = "teams";
 	private static final String PARAM_SPORT = "sport";
+	private static final String PARAM_ERROR = "error";
     /**
      * Default constructor. 
      */
@@ -66,6 +67,7 @@ public class AddCompetitionPageFilter implements Filter {
 			request.setAttribute(PARAM_SPORT, sport);
 		} catch (ProjectException e) {
 			LOGGER.error(e);
+			req.getSession().setAttribute(PARAM_ERROR, e.getMessage());
 			resp.sendRedirect(req.getContextPath() + PageManager.getPage("path.error"));
 		}		
 		chain.doFilter(request, response);

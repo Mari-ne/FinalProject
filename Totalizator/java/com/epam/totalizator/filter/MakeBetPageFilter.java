@@ -38,6 +38,7 @@ public class MakeBetPageFilter implements Filter {
 	private static final String PARAM_LANG = "lang";
 	private static final String PARAM_USER = "user";
 	private static final String PARAM_LIST = "list";
+	private static final String PARAM_ERROR = "error";
 	
     /**
      * Default constructor. 
@@ -71,6 +72,7 @@ public class MakeBetPageFilter implements Filter {
 			}
 		} catch (ProjectException e) {
 			LOGGER.error(e);
+			req.getSession().setAttribute(PARAM_ERROR, e.getMessage());
 			resp.sendRedirect(req.getContextPath() + PageManager.getPage("path.error"));
 		}		
 		chain.doFilter(request, response);
