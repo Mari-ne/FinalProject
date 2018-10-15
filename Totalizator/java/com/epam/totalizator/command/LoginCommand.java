@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import com.epam.totalizator.entity.User;
 import com.epam.totalizator.service.UserService;
 import com.epam.totalizator.servlet.SessionRequestContainer;
+import com.epam.totalizator.util.Hasher;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.Validator;
@@ -33,7 +34,7 @@ public class LoginCommand extends AbstractCommand {
 		try {
 			login = req.getParametr(PARAM_LOGIN)[0];
 			password = req.getParametr(PARAM_PASSWORD)[0];
-			password = Validator.passwordHasher(password);
+			password = Hasher.passwordHasher(password);
 			Optional<User> user = UserService.isAutorized(login, password);
 			if(user.isPresent()) {
 				req.setSessionAttribute(PARAM_USER, user.get());

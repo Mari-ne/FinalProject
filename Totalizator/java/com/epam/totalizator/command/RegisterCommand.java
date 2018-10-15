@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import com.epam.totalizator.entity.User;
 import com.epam.totalizator.service.UserService;
 import com.epam.totalizator.servlet.SessionRequestContainer;
+import com.epam.totalizator.util.Hasher;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.Validator;
@@ -43,7 +44,7 @@ public class RegisterCommand extends AbstractCommand {
 				req.setSessionAttribute(PARAM_MESSAGE, err.getValue());
 				page = PageManager.getPage("path.register");
 			}else {
-				password = Validator.passwordHasher(password);
+				password = Hasher.passwordHasher(password);
 				req.setSessionAttribute("user", new User(login, password, email, role, null));
 				page = PageManager.getPage("path.personalData");
 			}
