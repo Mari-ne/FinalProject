@@ -48,8 +48,8 @@
 		<c:if test="${sessionScope.user.role == 'Bookmaker'}">
 			<button id="manage" type="button" onclick="manage()"><fmt:message key="pool.managePool" bundle="${rb}" /><i class="fa fa-money"></i></button>
 		</c:if>
-		<form action="Controller" method="get" onsubmit="return check();">
-			<input type="hidden" name="commnad" value="set_pool">
+		<form action="Controller" method="post" onsubmit="return check();">
+			<input type="hidden" name="command" value="set_pool">
 			<table>
 				<tr>
 					<th><fmt:message key="table.correct" bundle="${rb}" /></th>
@@ -70,7 +70,10 @@
 					</tr>
 				</c:forEach>
 			</table>
-			<div id = "error"></div>
+			<div id = "error">
+				<div style="display:none"><fmt:message key='error.pool.summ' bundle='${mes}' /></div>
+				<div style="display:none"><fmt:message key='error.pool.part' bundle='${mes}' /></div>
+			</div>
 			<button type="submit" id="submit" style="display:none"><fmt:message key="button.save" bundle="${rb}" /></button>
 			<button type="reset" id="reset" style="display:none"><fmt:message key="button.reset" bundle="${rb}" /></button>
 		</form>

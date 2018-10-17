@@ -51,13 +51,13 @@ function count(items){
 function check(){
 	var c = document.getElementById("count");
 	if(parseInt(c.innerHTML, 10) !== 100){
-		document.getElementById("error").innerHTML = "<fmt:message key='error.pool.summ' bundle='${mes}' />";
+		document.getElementById("error").getElementsByTagName("div")[0].style.display = "initial";
 		return false;
 	}
 	var pool = document.getElementsByClassName("pool");
 	for(var i = 0; i < pool.length; i ++){
 		if(parseInt(pool[i].value, 10) === 0){
-			document.getElementById("error").innerHTML += "<br><fmt:message key='error.pool.part' bundle='${mes}' />";
+			document.getElementById("error").getElementsByTagName("div")[1].style.display = "initial";
 			return false;
 		}
 	}
