@@ -31,7 +31,9 @@ public class ResultService {
 	public static void changePool(String[] parts) throws ProjectException{
 		List<Result> result = resDao.findAll();
 		BigDecimal pool = BigDecimal.ZERO;
-		result.forEach((r)->pool.add(r.getPool()));
+		for(Result res : result) {
+			pool = pool.add(res.getPool());
+		}
 		for(int i = 0; i < parts.length; i ++) {
 			int percent = Integer.parseInt(parts[i]);
 			BigDecimal newPool = pool.multiply(BigDecimal.valueOf(percent)).divide(BigDecimal.valueOf(100));

@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 
 import com.epam.totalizator.service.ResultService;
 import com.epam.totalizator.servlet.SessionRequestContainer;
+import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 
 /**
@@ -25,6 +26,7 @@ public class SetPoolCommand extends AbstractCommand {
 		try {
 			String[] parts = req.getParametr(PARAM_POOL);
 			ResultService.changePool(parts);
+			page = PageManager.getPage("path.pool");
 		} catch (InvalidAttributesException e) {
 			LOGGER.warn(e);
 		}
