@@ -63,7 +63,7 @@ public class BetsPageFilter implements Filter {
 				list.add(forecast);
 			}
 			if(!list.isEmpty()) {
-				List<String> user = new ArrayList<>();
+				List<String> user = new ArrayList<>();			
 				for(Forecast forc : list.get(0)) {
 					user.add(forc.getUserLogin());
 				}

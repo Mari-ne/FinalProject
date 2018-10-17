@@ -54,7 +54,7 @@ public class CompetitionDao extends AbstractDao<Integer, Competition> {
 			+ "from competition as c inner join language_has_sport_team as l1 on c.team1_id = l1.sport_team_id\r\n"
 			+ " 					inner join language_has_sport_team as l2 on c.team2_id = l2.sport_team_id\r\n"
 			+ " 					inner join language_m2m_sport as l3 on l3.sport_id = c.sport_id\r\n"	
-			+ "where l1.language_id = ? and l2.language_id = ? and l3.language_id = ? and c.state = 'Acceptence of bets'";
+			+ "where l1.language_id = ? and l2.language_id = ? and l3.language_id = ? and c.state = 'Acceptance of bets'";
 	
 	private static final String SQL_SELECT_BETTABLE = "select id, team1_id, team2_id, start, finish\r\n"
 			+ "from competition\r\n"	

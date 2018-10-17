@@ -13,6 +13,8 @@ import com.epam.totalizator.entity.PersonalResult;
 import com.epam.totalizator.entity.User;
 import com.epam.totalizator.exception.ProjectException;
 import com.epam.totalizator.util.Hasher;
+import com.epam.totalizator.util.Mailer;
+import com.epam.totalizator.util.PasswordGenerator;
 import com.epam.totalizator.util.Validator;
 
 /**
@@ -170,5 +172,17 @@ public class UserService {
 	
 	public static final List<User> getBookmakers() throws ProjectException{
 		return userDao.findByRole("Bookmaker");
+	}
+	
+	public static Error addUser(String login, String email, String role) throws ProjectException {
+		String password = PasswordGenerator.generate();
+		Error err = register(login, password, email, role);
+		if(err.equals(Error.NONE)) {
+			Mailer mailer = new Mailer();
+			String text = "Hello!\nYou was registered in Totalizator by our administrator.\n";
+			text += "Your role: " + role + "\nYour login: " + login + "\nYour password: " + password;
+			mailer.send("You was registered", text, email);
+		}
+		return err;
 	}
 }

@@ -2,6 +2,7 @@ package com.epam.totalizator.service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 import com.epam.totalizator.dao.CompetitionDao;
 import com.epam.totalizator.dao.ForecastDao;
@@ -31,7 +32,6 @@ public class CompetitionService {
 		compet.setSportId(sport);
 		compet.setStart(start);
 		compet.setFinish(finish);
-		org.apache.log4j.Logger.getRootLogger().info(compDao.findBettable().size() + "\n");
 		boolean result = compDao.create(compet);
 		if(compDao.findBettable().size() == ServiceThread.number.get()) {
 			ResultService.refreshResult();
@@ -45,5 +45,17 @@ public class CompetitionService {
 	
 	public static List<Forecast> getForecastById(int competitionId, String lang) throws ProjectException{
 		return forecastDao.findByCompetitionID(competitionId, lang.toUpperCase());
+	}
+	
+
+	
+	public static boolean hasMadeBet(String login) throws ProjectException {
+		boolean result = false;
+		List<Forecast> list = forecastDao.findByLogin(login);
+		Optional<Competition> comp = compDao.findById(list.get(list.size() - 1).getCompetitionId());
+		if(comp.isPresent() && comp.get().getState().equals("Acceptance of bets")) {
+			result = true;
+		}
+		return result;
 	}
 }

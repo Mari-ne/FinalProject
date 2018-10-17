@@ -14,6 +14,7 @@ public enum CommandEnum {
 	ADD_COMPETITION(new AddCompetitionCommand()),
 	ADD_TEAM(new AddTeamCommand()),
 	ADD_FORECAST(new AddForecastCommand()),
+	ADD_USER(new AddUserCommand()),
 	ADD(new AddCommand()),
 	SET_POOL(new SetPoolCommand());
 	

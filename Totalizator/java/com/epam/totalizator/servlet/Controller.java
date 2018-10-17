@@ -15,6 +15,7 @@ import org.apache.log4j.Logger;
 import com.epam.totalizator.command.AbstractCommand;
 import com.epam.totalizator.command.CommandFactory;
 import com.epam.totalizator.pool.ConnectionPool;
+import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
 
@@ -56,7 +57,8 @@ public class Controller extends HttpServlet {
 		    	}	    	
 			} catch (ProjectException e) {
 				LOGGER.error(e);
-				request.setSessionAttribute(PARAM_ERROR, e.getMessage());
+				request.setSessionAttribute(PARAM_ERROR, MessageManager.getMessage(e.getMessage()));
+				page = Optional.of(PageManager.getPage("path.error"));
 			}
 			request.createRequest(req);
 			resp.sendRedirect(req.getContextPath() + page.get());

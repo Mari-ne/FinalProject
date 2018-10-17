@@ -60,6 +60,9 @@ public class MakeBetPageFilter implements Filter {
 		HttpServletResponse resp = (HttpServletResponse) response;
 		try {
 			User user = (User)req.getSession().getAttribute(PARAM_USER);
+			if(CompetitionService.hasMadeBet(user.getLogin())) {
+				throw new ProjectException(MessageManager.getMessage("exc.makeBet.second"));
+			}
 			if(user.getCards() != null) {
 				List<Competition> comp = CompetitionService.getBettable((String)req.getSession().getAttribute(PARAM_LANG));
 				if(comp.isEmpty() || comp.size() != ServiceThread.number.get()) {

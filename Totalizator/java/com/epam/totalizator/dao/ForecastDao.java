@@ -29,13 +29,12 @@ public class ForecastDao extends AbstractDao<Key<String, Integer>, Forecast> {
 	private static final String SQL_SELECT_BY_LOGIN = "select user_login, competition_id, result\r\n"
 			+ "from competition_m2m_user where user_login = ?";
 	
-	private static final String SQL_SELECT_BY_COMPETITION_ID_WITH_NAMES = "select cu.competition_id, \r\n"
+	private static final String SQL_SELECT_BY_COMPETITION_ID_WITH_NAMES = "select cu.user_login, cu.competition_id, \r\n"
 			+ "case cu.result when '1' then l1.name when '2' then l2.name else cu.result end as result\r\n"
 			+ "from competition_m2m_user as cu inner join competition as c on cu.competition_id = c.id\r\n"
 			+ "									inner join language_has_sport_team as l1 on c.team1_id = l1.sport_team_id\r\n"
 			+ "									inner join language_has_sport_team as l2 on c.team2_id = l2.sport_team_id\r\n"
-			+ "where l1.language_id = ? and l2.language_id = ? and cu.competition_id = ?"
-			+ "order by cu.competition_id desc\r\n"
+			+ "where l1.language_id = ? and l2.language_id = ? and cu.competition_id = ?\r\n"
 			+ "limit 15";
 	
 	private static final String SQL_SELECT_BY_LOGIN_WITH_NAMES = "select cu.competition_id, \r\n"
@@ -43,7 +42,7 @@ public class ForecastDao extends AbstractDao<Key<String, Integer>, Forecast> {
 			+ "from competition_m2m_user as cu inner join competition as c on cu.competition_id = c.id\r\n"
 			+ "									inner join language_has_sport_team as l1 on c.team1_id = l1.sport_team_id\r\n"
 			+ "									inner join language_has_sport_team as l2 on c.team2_id = l2.sport_team_id\r\n"
-			+ "where l1.language_id = ? and l2.language_id = ? and cu.user_login = ?"
+			+ "where l1.language_id = ? and l2.language_id = ? and cu.user_login = ?\r\n"
 			+ "order by cu.competition_id desc\r\n"
 			+ "limit 15";
 	
@@ -172,6 +171,7 @@ public class ForecastDao extends AbstractDao<Key<String, Integer>, Forecast> {
 			result = stat.executeQuery();
 			while(result.next()) {
 				Forecast forecast = new Forecast();
+				forecast.setUserLogin(result.getString(LOGIN));
 				forecast.setCompetitionId(result.getInt(COMPETITION_ID));
 				if(result.getString(RESULT).charAt(0) == 'x') {
 					forecast.setResultFull(MessageManager.getMessage("forecast.draw"));

@@ -17,7 +17,7 @@ import com.epam.totalizator.util.MessageManager;
 /**
  * Servlet Filter implementation class ErrorFilter
  */
-@WebFilter(urlPatterns = { "/jsp/error.jsp"},
+@WebFilter(urlPatterns = { "/jsp/*"},
 dispatcherTypes = {
 		DispatcherType.FORWARD,
 		DispatcherType.REQUEST
@@ -48,13 +48,11 @@ public class ErrorFilter implements Filter {
 			req.setAttribute(PARAM_MESSAGE, MessageManager.getMessage(param));
 			req.getSession().removeAttribute(PARAM_MESSAGE);
 		}
-		org.apache.log4j.Logger.getRootLogger().info(param + "\n");
 		param = (String)req.getSession().getAttribute(PARAM_ERROR);
 		if(param != null) {
 			req.setAttribute(PARAM_MESSAGE, param);
 			req.getSession().removeAttribute(PARAM_ERROR);
 		}
-		org.apache.log4j.Logger.getRootLogger().info(param + "\n");
 		chain.doFilter(request, response);
 	}
 

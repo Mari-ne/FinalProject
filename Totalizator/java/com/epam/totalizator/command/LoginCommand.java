@@ -12,7 +12,6 @@ import com.epam.totalizator.servlet.SessionRequestContainer;
 import com.epam.totalizator.util.Hasher;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
-import com.epam.totalizator.util.Validator;
 
 /**
  * Class-command to authorize in system.
@@ -39,6 +38,8 @@ public class LoginCommand extends AbstractCommand {
 			if(user.isPresent()) {
 				req.setSessionAttribute(PARAM_USER, user.get());
 				page = PageManager.getPage("path.personalData");
+			}else {
+				throw new ProjectException("exc.login.none");
 			}
 		} catch (InvalidAttributesException e) {
 			LOGGER.warn(e);

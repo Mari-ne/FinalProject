@@ -11,6 +11,7 @@ import com.epam.totalizator.servlet.SessionRequestContainer;
 import com.epam.totalizator.util.MessageManager;
 import com.epam.totalizator.util.PageManager;
 import com.epam.totalizator.exception.ProjectException;
+import com.epam.totalizator.service.ResultService;
 
 /**
  * Class command to change language of representation.

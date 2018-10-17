@@ -1,22 +1,14 @@
 package com.epam.totalizator.servlet;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
-import org.apache.log4j.Logger;
 
 import com.epam.totalizator.util.ServiceThread;
 
 /**
  * Application Lifecycle Listener implementation class ContextListener
  */
-public class ContextListener implements ServletContextListener {
-
-	private static final Logger LOGGER = Logger.getRootLogger();
-	
+public class ContextListener implements ServletContextListener {	
     /**
      * Default constructor. 
      */
