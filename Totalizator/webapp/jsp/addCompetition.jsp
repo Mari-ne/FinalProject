@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="/assets/css/table.css">
 	<link rel="stylesheet" href="/assets/css/link.css">
 	<link rel="stylesheet" href="/assets/css/icon.css">
+	<link rel="stylesheet" href="/assets/css/select.css">
 	<c:choose>
 		<c:when test="${sessionScope.lang == 'en'}">
 			<link rel="stylesheet" href="/assets/css/enLang.css">

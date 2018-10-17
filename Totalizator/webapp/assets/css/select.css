@@ -1,0 +1,10 @@
+select, option{
+	background: #BE51CD;
+  	color: #fff;
+  	border: solid #FFE662 0.5px;
+  	outline: none;
+}
+
+select{
+	margin: 5px 20px;
+}

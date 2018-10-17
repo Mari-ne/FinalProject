@@ -34,7 +34,7 @@
 				<c:import url="..\WEB-INF\jspf\authorize.jsp" />
 			</c:when>
 			<c:otherwise>
-				<c:import url="..\WEB-INF\jspf\upper_en_EN.jsp" />
+				<c:import url="..\WEB-INF\jspf\upper.jsp" />
 			</c:otherwise>
 		</c:choose>
 		<form action = "Controller" method = "get">
@@ -45,12 +45,12 @@
 	<c:import url="..\WEB-INF\jspf\sidenav.jsp" />
 	<div class = "content">
 		<c:choose>
-			<c:when test="${users != null}">
+			<c:when test="${user != null}">
 				<table>
 					<caption><fmt:message key="bets.bets" bundle="${rb}" /></caption>
 					<tr>
 						<th><fmt:message key="table.number" bundle="${rb}" /></th>
-						<c:forEach var="elem" items="${users}" varStatus="status">
+						<c:forEach var="elem" items="${user}" varStatus="status">
 							<th><c:out value="${elem}"></c:out></th>
 						</c:forEach>
 					</tr>

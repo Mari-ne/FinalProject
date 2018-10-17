@@ -25,6 +25,7 @@
 			<link rel="stylesheet" href="/assets/css/ruLang.css">
 		</c:otherwise>
 	</c:choose>
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<title><fmt:message key="user.title" bundle="${rb}" /></title>
 </head>
 <body>
@@ -63,7 +64,11 @@
 				</tr>
 			</c:forEach>	
 		</table>
-		<button type="button"><fmt:message key="user.addBookmaker" bundle="${rb}" /></button>
+	 	<form action="Controller" method="get">
+		  	<input type="hidden" name="command" value="add">
+		  	<input type="hidden" name="type" value="User">
+		  	<button type="submit"><fmt:message key="user.addBookmaker" bundle="${rb}" /><i class="material-icons">add</i></button>
+		</form>
     </div>
 </body>
 </html>

@@ -82,7 +82,7 @@
 			</tr>
 			</c:if>
 		</table>
-		<a href="${pageContext.request.contextPath}/jsp/personalUpdate.jsp" ><fmt:message key="personal.update" bundle="${rb}"/><i class="material-icons">mode_edit</i></a>
+		<a href="${pageContext.request.contextPath}/jsp/personalUpdate.jsp" ><fmt:message key="personal.update" bundle="${rb}"/><i class="material-icons" style="float:none">mode_edit</i></a>
 		<c:if test="${sessionScope.user.role == 'User' && forecast.size() != 0}">
 			<table>
 				<caption><fmt:message key="personal.forecast" bundle="${rb}" /></caption>

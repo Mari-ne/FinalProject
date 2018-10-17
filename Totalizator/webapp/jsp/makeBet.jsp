@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="/assets/css/table.css">
 	<link rel="stylesheet" href="/assets/css/link.css">
 	<link rel="stylesheet" href="/assets/css/icon.css">
+	<link rel="stylesheet" href="/assets/css/select.css">
 	<c:choose>
 		<c:when test="${sessionScope.lang == 'en'}">
 			<link rel="stylesheet" href="/assets/css/enLang.css">
@@ -53,7 +54,7 @@
 						<td>
 							<select name = "forecast">
 								<option value="1"><c:out value="${elem.team1}" /></option>
-								<option value="x">Draw</option>
+								<option value="x"><fmt:message key="makeBet.draw"  bundle="${rb}"/></option>
 								<option value="2"><c:out value="${elem.team2}"/></option>
 							</select>
 						</td>

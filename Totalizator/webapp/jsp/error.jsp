@@ -37,7 +37,7 @@
 			</c:otherwise>
 		</c:choose>
 		<form action = "Controller" method = "get">
-		  	<input type = "hidden" name = 'page' value = "path.bets"></input>
+		  	<input type = "hidden" name = 'page' value = "path.error"></input>
 		  	<c:import url="..\WEB-INF\jspf\header.jsp" />
 		</form>
   	</div>
